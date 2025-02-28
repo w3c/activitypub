@@ -12,11 +12,11 @@ ActivityPub was developed by the [Social Web Working Group](https://www.w3.org/S
 
 - The [ActivityPub specification](https://www.w3.org/TR/activitypub/) is the official document that describes the protocol.
 - The [errata](https://www.w3.org/wiki/ActivityPub_errata) pages shows known errors in the specification.
-- The [Editor's Draft](https://w3.github.io/activitypub/) incorporates the corrected errata directly into the specification text.
+- The [Editor's Draft](https://w3c.github.io/activitypub/) incorporates the corrected errata directly into the specification text.
 - The [SocialCG](https://www.w3.org/community/socialcg/) is the community group that maintains the specification. It meets regularly to discuss the specification and its implementations.
 - The [ActivityPub Primer](https://www.w3.org/wiki/ActivityPub/Primer) gives deeper explanations of topics described in the specification.
 - The [ActivityPub WebFinger profile](https://swicg.github.io/activitypub-webfinger/) describes how to use WebFinger with ActivityPub.
-- The [ActivityPub HTTP Signatures profile](https://swicg.github.io/activitypub-http-signatures/) describes how to use HTTP Signatures with ActivityPub.
+- The [ActivityPub HTTP Signatures profile](https://swicg.github.io/activitypub-http-signature/) describes how to use HTTP Signatures with ActivityPub.
 - The [ActivityPub Data Portability task force](https://swicg.github.io/activitypub-data-portability/) describes how to use ActivityPub for data portability.
 
 ## Editors
@@ -46,7 +46,7 @@ To handle editorial errors like spelling or grammar mistakes, unclear or ambiguo
 1. Make a GitHub issue.
 2. The editor will make a [proposed erratum](https://www.w3.org/wiki/ActivityPub_errata/Proposed) for review by the SocialCG.
 3. At a future SocialCG meeting, the group will review the proposed erratum and decide whether to accept it. Accepted errata are added to the [errata](https://www.w3.org/wiki/ActivityPub_errata) page.
-4. The editor will incorporate the errata into the [Editor's Draft](https://w3.github.io/activitypub/).
+4. The editor will incorporate the errata into the [Editor's Draft](https://w3c.github.io/activitypub/).
 5. Errata are periodically deployed to the main [ActivityPub specification](https://www.w3.org/TR/activitypub/).
 
 ### Backwards-compatible changes

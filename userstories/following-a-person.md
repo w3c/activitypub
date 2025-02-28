@@ -32,7 +32,7 @@ Delano's client submits a post to its outbox declaring that Delano
 would like to subscribe to Beth.  Beth is included as a recipient in
 the "to" field so that her server can know to begin delivery of
 messages to Delano, and the special
-[public collection](http://w3c-social.github.io/activitypub/#public-addressing)
+[public collection](http://w3c.github.io/activitypub/#public-addressing)
 is added as a Cc: so that others might know about that subscription.
 
 
