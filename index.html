@@ -532,31 +532,14 @@
         <p>
           All Objects in [[!ActivityStreams]] should have unique global
           identifiers.
-          ActivityPub extends this requirement; all objects distributed by the
-          ActivityPub protocol MUST have unique global identifiers, unless they
-          are intentionally transient (short lived activities that are not
-          intended to be able to be looked up, such as some kinds of chat
-          messages or game notifications).
-          These identifiers must fall into one of the following groups:
+          ActivityPub extends this requirement; all objects distributed by the ActivityPub protocol MUST have unique global identifiers, unless they are intentionally transient or anonymous, in which case the identifier MAY be omitted. If present, the identifiers MUST be publicly dereferencable URIs, such as HTTPS URIs, with their authority belonging to that of their originating server. (Publicly facing content SHOULD use HTTPS URIs).
         </p>
-        <ol>
-          <li>
-            Publicly dereferencable URIs, such as HTTPS URIs, with their
-            authority belonging to that of their originating server.
-            (Publicly facing content SHOULD use HTTPS URIs).
-          </li>
-          <li>
-            An ID explicitly specified as the JSON <code>null</code> object,
-            which implies an anonymous object (a part of its parent context)
-          </li>
-        </ol>
         <p>
           Identifiers MUST be provided for activities posted in server to
           server communication, unless the activity is intentionally transient.
           However, for client to server communication, a server receiving an
           object posted to the outbox with no specified <code>id</code> SHOULD
-          allocate an object ID in the actor's namespace and attach it to the
-          posted object.
+          allocate an object ID and attach it to the posted object.
         </p>
         <p>All objects have the following properties:</p>
         <dl>
@@ -575,8 +558,7 @@
       <section id="retrieving-objects">
         <h2>Retrieving objects</h2>
         <p>
-          The HTTP GET method may be dereferenced against an object's
-          <code>id</code> property to retrieve the activity.
+          The HTTP GET method may be used to dereference an object's <code>id</code> property to retrieve the object.
           Servers MAY use HTTP content negotiation as defined in [[!RFC7231]] to
           select the type of data to return in response to a request,
           but MUST present the ActivityStreams object representation
@@ -586,7 +568,7 @@
           response to <code>application/activity+json</code> as well.
           The client MUST specify an <code>Accept</code> header with the
           <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
-          media type in order to retrieve the activity.
+          media type in order to retrieve the object.
         </p>
         <p>
           Servers MAY implement other behavior for requests which do not comply
@@ -735,8 +717,7 @@
         <dl>
           <dt id="inbox-property">inbox</dt>
           <dd>
-            A reference to an [[!ActivityStreams]]
-            <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+            An <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
               <code>OrderedCollection</code></a>
             comprised of all the messages received by the actor; see
             <a href="#inbox"></a>.
@@ -1037,12 +1018,7 @@
         <h2>Followers Collection</h2>
         <p>
           Every <a href="#actors">actor</a> SHOULD have a <code>followers</code>
-          collection.
-          This is a list of everyone who has sent a
-          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-follow">Follow</a>
-          activity for the actor, added as a
-          <a href="#follow-activity-outbox">side effect</a>.
-          This is where one would find a list of all the actors that are
+          collection. This is where one would find a list of all the actors that are
           following the actor.
           The <code>followers</code> collection MUST be either an
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
@@ -1907,7 +1883,7 @@ Location: https://dustycloud.org/likes/345
               recipient).
               The server MUST only target the values of <code>to</code>,
               <code>cc</code>, and/or <code>audience</code>
-              on the original object being forwarded, and not pick up any new
+              on the original activity being forwarded, and not pick up any new
               addressees whilst recursing through the linked objects
               (in case these addressees were purposefully amended by or via the client).
             </li>
@@ -2025,16 +2001,6 @@ Location: https://dustycloud.org/likes/345
           intermediate state.
           For example, a server might not send a <code>Reject</code> to protect
           a user's privacy.
-        </p>
-
-        <p>
-          In the case of receiving an <code>Accept</code> referencing this
-          <code>Follow</code> as the object, the server SHOULD add the
-          <code>actor</code> to the object actor's
-          <a href="#followers">Followers Collection</a>.
-          In the case of a <code>Reject</code>, the server MUST NOT add the
-          actor to the object actor's
-          <a href="#followers">Followers Collection</a>.
         </p>
 
         <div class="note">
@@ -2445,12 +2411,12 @@ Location: https://dustycloud.org/likes/345
       <p>
         This section is non-normative.
       </p>
-      <li>
-        <ul><strong>2024-01-04</strong>: Include erratum allowing filtering in section 6.11.</ul>
-        <ul><strong>2024-01-04</strong>: Include erratum allowing filtering in section 7.1.1.</ul>
-        <ul><strong>2024-01-04</strong>: Include erratum allowing different ordering in collections in section 5.</ul>
-        <ul><strong>2024-01-04</strong>: Include erratum removing preferredUsername from list of natural-language-enabled properties in section 4.1.</ul>
-      </li>
+      <ul>
+        <li><strong>2024-01-04</strong>: Include erratum allowing filtering in section 6.11.</li>
+        <li><strong>2024-01-04</strong>: Include erratum allowing filtering in section 7.1.1.</li>
+        <li><strong>2024-01-04</strong>: Include erratum allowing different ordering in collections in section 5.</li>
+        <li><strong>2024-01-04</strong>: Include erratum removing preferredUsername from list of natural-language-enabled properties in section 4.1.</li>
+      </ul>
     </section>
   </body>
 </html>

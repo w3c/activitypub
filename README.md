@@ -6,17 +6,24 @@ It provides a client to server API for creating, updating and deleting content, 
 
 It is based on the [ActivityStreams 2.0](https://www.w3.org/TR/activitystreams-core/) (AS2) data format, which is a JSON-LD format for describing social activities. Because AS2 is extensible with new types of activities, objects, and properties, ActivityPub is also extensible. You can build many different kinds of social applications on top of ActivityPub.
 
-ActivityPub was developed by the [Social Web Working Group](https://www.w3.org/Social/WG) of the [World Wide Web Consortium](https://www.w3.org/). It was standardized in 2018 as a [W3C Recommendation](https://www.w3.org/TR/activitypub/).
+ActivityPub is maintained by the [Social Web Working Group](https://www.w3.org/groups/wg/social) of the [World Wide Web Consortium](https://www.w3.org/).
+
+See also the [ActivityPub publication history](https://www.w3.org/standards/history/activitypub/).
 
 ## Key info
 
 - The [ActivityPub specification](https://www.w3.org/TR/activitypub/) is the official document that describes the protocol.
 - The [errata](https://www.w3.org/wiki/ActivityPub_errata) pages shows known errors in the specification.
 - The [Editor's Draft](https://w3c.github.io/activitypub/) incorporates the corrected errata directly into the specification text.
-- The [SocialCG](https://www.w3.org/community/socialcg/) is the community group that maintains the specification. It meets regularly to discuss the specification and its implementations.
+- The [Social  Web WG](https://www.w3.org/groups/wg/social/) is the working group that maintains the specification. It meets regularly to discuss the specification and its implementations.
 - The [ActivityPub Primer](https://www.w3.org/wiki/ActivityPub/Primer) gives deeper explanations of topics described in the specification.
+
+## Additional documents
+
+The [Social Web Incubator Community Group](https://www.w3.org/groups/cg/socialcg/) also maintains:
+
 - The [ActivityPub WebFinger profile](https://swicg.github.io/activitypub-webfinger/) describes how to use WebFinger with ActivityPub.
-- The [ActivityPub HTTP Signatures profile](https://swicg.github.io/activitypub-http-signature/) describes how to use HTTP Signatures with ActivityPub.
+- The [ActivityPub HTTP Signature profile](https://swicg.github.io/activitypub-http-signature/) describes how to use HTTP Signature with ActivityPub.
 - The [ActivityPub Data Portability task force](https://swicg.github.io/activitypub-data-portability/) describes how to use ActivityPub for data portability.
 
 ## Editors
@@ -44,9 +51,9 @@ Explanations, tips and clarifications usually go in the [ActivityPub Primer](htt
 To handle editorial errors like spelling or grammar mistakes, unclear or ambiguous text, factual errors in text, or syntax errors in examples, we have several steps.
 
 1. Make a GitHub issue.
-2. The editor will make a [proposed erratum](https://www.w3.org/wiki/ActivityPub_errata/Proposed) for review by the SocialCG.
-3. At a future SocialCG meeting, the group will review the proposed erratum and decide whether to accept it. Accepted errata are added to the [errata](https://www.w3.org/wiki/ActivityPub_errata) page.
-4. The editor will incorporate the errata into the [Editor's Draft](https://w3c.github.io/activitypub/).
+2. The editor will make a [proposed erratum](https://www.w3.org/wiki/ActivityPub_errata/Proposed) for review by the Social Web Working Group.
+3. At a future Social Web WG meeting, the group will review the proposed erratum and decide whether to accept it. Accepted errata are added to the [errata](https://www.w3.org/wiki/ActivityPub_errata) page.
+4. The editor will incorporate the errata into the [Editor's Draft](https://w3.github.io/activitypub/).
 5. Errata are periodically deployed to the main [ActivityPub specification](https://www.w3.org/TR/activitypub/).
 
 ### Backwards-compatible changes
