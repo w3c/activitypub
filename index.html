@@ -7,40 +7,21 @@
             async class="remove"></script>
     <script class="remove">
       var respecConfig = {
-          specStatus: "CG-FINAL",
-          publishDate: "2024-01-04",
-          previousPublishDate: "2018-01-23",
-          previousMaturity: "REC",
-          license: "w3c-software-doc",
+          specStatus: "ED",
           shortName:  "activitypub",
-          group: "socialcg",
-          wgURI: "https://www.w3.org/Social/WG",
+          group: "wg/social",
+          github: "w3c/activitypub",
           wgPublicList: "public-socialweb",
-          wgPatentURI: "https://www.w3.org/2004/01/pp-impl/72531/status",
           edDraftURI: "https://w3c.github.io/activitypub/",
-          testSuiteURI: "https://test.activitypub.rocks/",
           errata: "https://www.w3.org/wiki/ActivityPub_errata",
-          implementationReportURI: "https://activitypub.rocks/implementation-report",
-          otherLinks: [
+          editors: [
               {
-                  "key": "Repository",
-                  "data": [
-                      {
-                          "value": "Git repository",
-                          "href": "https://github.com/w3c/activitypub",
-                      },
-                      {
-                          "value": "Issues",
-                          "href": "https://github.com/w3c/activitypub/issues",
-                      },
-                      {
-                          "value": "Commits",
-                          "href": "https://github.com/w3c/activitypub/commits/gh-pages",
-                      }
-                  ]
+                  name:       "Evan Prodromou",
+                  url:        "https://socialwebfoundation.org/author/evanprodromou/",
+                  w3cid:      "43626"
               }
           ],
-          editors: [
+          formerEditors: [
                 {
                     name:       "Christine Lemmer-Webber",
                     url:        "https://dustycloud.org/",
@@ -71,47 +52,15 @@
               },
               {
                   name: "Evan Prodromou",
-                  url: "https://en.wikipedia.org/wiki/Evan_Prodromou"
+                  url: "https://socialwebfoundation.org/author/evanprodromou/"
               }
           ],
-          localBiblio:  {
-            "ActivityStreams": {
-              title:    "Activity Streams 2.0",
-              href:     "https://www.w3.org/TR/activitystreams-core/",
-              authors:  [
-                "J. Snell",
-              ],
-              status:   "Editors Draft",
-              publisher:  "ActivityStreams Working Group",
-            },
-            "Activity-Vocabulary": {
-              title:    "Activity Vocabulary",
-              href:     "https://www.w3.org/TR/activitystreams-vocabulary/",
-              authors:  [
-                "J. Snell",
-              ],
-              status:   "Editors Draft",
-              publisher:  "ActivityStreams Working Group",
-            },
-            "OAuth-Server-Metadata": {
-              title:    "OAuth 2.0 Authorization Server Metadata",
-              href:     "https://tools.ietf.org/html/draft-ietf-oauth-discovery-06",
-              authors:  [
-                "M. Jones",
-                "N. Sakimura",
-                "J. Bradley"
-              ],
-              status:   "Internet-Draft",
-              publisher:  "OAuth Working Group",
-            },
-        },
+          lint: {
+                "check-punctuation": true
+          },
+          doJsonLd: true
       };
     </script>
-    <style type="text/css">
-      img {
-          max-width: 100%;
-      }
-    </style>
   </head>
   <!-- STYLISTIC NOTE: This document wraps on column 79 and at the end of every
        sentence. -->
@@ -119,7 +68,7 @@
     <section id="abstract">
       <p>
         The ActivityPub protocol is a decentralized social networking protocol
-        based upon the [[ActivityStreams]] 2.0 data format.
+        based upon the [[activitystreams-core]] 2.0 data format.
         It provides a client to server API for creating, updating and deleting
         content, as well as a federated server to server API for delivering
         notifications and content.
@@ -199,7 +148,7 @@
       </pre>
 
       <p>
-        ActivityPub uses [[!ActivityStreams]] for its vocabulary.
+        ActivityPub uses [[!activitystreams-core]] for its vocabulary.
         This is pretty great because ActivityStreams includes all the common
         terms you need to represent all the activities and content flowing
         around a social network.
@@ -470,11 +419,11 @@
     <section id="obj">
       <h2>Objects</h2>
       <p>
-        Objects are the core concept around which both [[!ActivityStreams]] and
+        Objects are the core concept around which both [[!activitystreams-core]] and
         ActivityPub are built.
         Objects are often wrapped in Activities and are contained in streams of
         Collections, which are themselves subclasses of Objects.
-        See the [[!Activity-Vocabulary]] document, particularly the
+        See the [[!activitystreams-vocabulary]] document, particularly the
         <a href="https://www.w3.org/TR/activitystreams-vocabulary/#types">Core Classes</a>;
         ActivityPub follows the mapping of this vocabulary very closely.
       </p>
@@ -530,7 +479,7 @@
       <section id="obj-id">
         <h2>Object Identifiers</h2>
         <p>
-          All Objects in [[!ActivityStreams]] should have unique global
+          All Objects in [[!activitystreams-core]] should have unique global
           identifiers.
           ActivityPub extends this requirement; all objects distributed by the ActivityPub protocol MUST have unique global identifiers, unless they are intentionally transient or anonymous, in which case the identifier MAY be omitted. If present, the identifiers MUST be publicly dereferencable URIs, such as HTTPS URIs, with their authority belonging to that of their originating server. (Publicly facing content SHOULD use HTTPS URIs).
         </p>
@@ -594,7 +543,7 @@
         <h2>The source property</h2>
         <p>
           In addition to all the properties defined by the
-	  [[!Activity-Vocabulary]], ActivityPub extends the <code>Object</code> by
+	  [[!activitystreams-vocabulary]], ActivityPub extends the <code>Object</code> by
 	  supplying the <code>source</code> property.
           The <code>source</code> property is intended to convey some
           sort of source from which the <code>content</code> markup
@@ -724,7 +673,7 @@
           </dd>
           <dt id="outbox-property">outbox</dt>
           <dd>
-            An [[!ActivityStreams]]
+            An [[!activitystreams-core]]
             <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
               <code>OrderedCollection</code></a>
             comprised of all the messages produced by the actor; see
@@ -738,12 +687,12 @@
         <dl>
           <dt id="following-property">following</dt>
           <dd>
-            A link to an [[!ActivityStreams]] collection of the actors that
+            A link to an [[!activitystreams-core]] collection of the actors that
             this actor is following; see <a href="#following"></a>
           </dd>
           <dt id="followers-property">followers</dt>
           <dd>
-            A link to an [[!ActivityStreams]] collection of the actors that
+            A link to an [[!activitystreams-core]] collection of the actors that
             follow this actor; see <a href="#followers"></a>.
           </dd>
         </dl>
@@ -753,7 +702,7 @@
         <dl>
           <dt id="liked-property">liked</dt>
           <dd>
-            A link to an [[!ActivityStreams]] collection of objects this
+            A link to an [[!activitystreams-core]] collection of objects this
             actor has liked; see <a href="#liked"></a>.
           </dd>
         </dl>
@@ -865,7 +814,7 @@
         <div class="note" id="as2-actor-properties">
           <p>
             As the upstream vocabulary for ActivityPub, any applicable
-            [[!ActivityStreams]] property may be used on ActivityPub Actors.
+            [[!activitystreams-core]] property may be used on ActivityPub Actors.
             Some ActivityStreams properties are particularly worth highlighting
             to demonstrate how they are used in ActivityPub implementations.
           </p>
@@ -903,7 +852,7 @@
     <section id="collections">
       <h2>Collections</h2>
       <p>
-        [[!ActivityStreams]] defines the collection concept; ActivityPub
+        [[!activitystreams-core]] defines the collection concept; ActivityPub
         defines several collections with special behavior.
         Note that ActivityPub makes use of
         <a href="https://www.w3.org/TR/activitystreams-core/#paging">
@@ -1074,7 +1023,7 @@
       <section id="public-addressing">
         <h2>Public Addressing</h2>
         <p>
-          In addition to [[!ActivityStreams]] collections and objects,
+          In addition to [[!activitystreams-core]] collections and objects,
           Activities may additionally be addressed to the special "public"
           collection, with the identifier
           <code>https://www.w3.org/ns/activitystreams#Public</code>.
@@ -1185,7 +1134,7 @@
     <section id="client-to-server-interactions">
       <h2>Client to Server Interactions</h2>
       <p>
-        Activities as defined by [[!ActivityStreams]] are the core mechanism
+        Activities as defined by [[!activitystreams-core]] are the core mechanism
         for creating, modifying and sharing content within the social graph.
       </p>
 
@@ -1386,7 +1335,7 @@ Location: https://dustycloud.org/likes/345
         <p>
           For client to server posting, it is possible to submit an object for
           creation without a surrounding activity.
-          The server MUST accept a valid [[!ActivityStreams]] object that
+          The server MUST accept a valid [[!activitystreams-core]] object that
           isn't a subtype of <code>Activity</code> in the POST request to the
           outbox.
           The server then MUST attach this object as the <code>object</code>
