@@ -125,8 +125,8 @@
 
       <p>
         These are endpoints, or really, just URLs which are listed in the
-        ActivityPub actor's ActivityStreams description.
-        (More on ActivityStreams later).
+        ActivityPub actor's Activity Streams description.
+        (More on Activity Streams later).
       </p>
 
       <p>
@@ -149,15 +149,15 @@
 
       <p>
         ActivityPub uses [[!activitystreams-core]] for its vocabulary.
-        This is pretty great because ActivityStreams includes all the common
+        This is pretty great because Activity Streams includes all the common
         terms you need to represent all the activities and content flowing
         around a social network.
-        It's likely that ActivityStreams already includes all the vocabulary
-        you need, but even if it doesn't, ActivityStreams can be extended
+        It's likely that Activity Streams already includes all the vocabulary
+        you need, but even if it doesn't, Activity Streams can be extended
         via [[!JSON-LD]].
         If you know what JSON-LD is, you can take advantage of the cool linked
         data approaches provided by JSON-LD.
-        If you don't, don't worry, JSON-LD documents and ActivityStreams can be
+        If you don't, don't worry, JSON-LD documents and Activity Streams can be
         understood as plain old simple JSON.
         (If you're going to add extensions, that's the point at which JSON-LD
         really helps you out).
@@ -215,7 +215,7 @@
         Let's say Alyssa wants to catch up with her friend, Ben Bitdiddle.
         She lent him a book recently and she wants to make sure he returns it
         to her.
-        Here's the message she composes, as an ActivityStreams object:
+        Here's the message she composes, as an Activity Streams object:
       </p>
 
       <pre class="example highlight json">
@@ -261,7 +261,7 @@
       </pre>
 
       <p>
-        Alyssa's server looks up Ben's ActivityStreams actor object, finds his
+        Alyssa's server looks up Ben's Activity Streams actor object, finds his
         inbox endpoint, and POSTs her object to his inbox.
       </p>
 
@@ -429,7 +429,7 @@
       </p>
       <p>
         ActivityPub defines some terms in addition to those provided by
-        ActivityStreams.
+        Activity Streams.
         These terms are provided in the ActivityPub
         <a href="http://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
         at
@@ -441,7 +441,7 @@
       <p>
         ActivityPub shares the same
         <a href="https://www.w3.org/TR/activitystreams-core/#urls">
-          URI / IRI conventions as in ActivityStreams</a>.
+          URI / IRI conventions as in Activity Streams</a>.
       </p>
       <p>
         Servers SHOULD validate the content they receive to avoid content
@@ -510,10 +510,10 @@
           The HTTP GET method may be used to dereference an object's <code>id</code> property to retrieve the object.
           Servers MAY use HTTP content negotiation as defined in [[!RFC7231]] to
           select the type of data to return in response to a request,
-          but MUST present the ActivityStreams object representation
+          but MUST present the Activity Streams object representation
           in response to
           <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>,
-          and SHOULD also present the ActivityStreams representation in
+          and SHOULD also present the Activity Streams representation in
           response to <code>application/activity+json</code> as well.
           The client MUST specify an <code>Accept</code> header with the
           <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
@@ -523,7 +523,7 @@
           Servers MAY implement other behavior for requests which do not comply
           with the above requirement.
           (For example, servers may implement additional legacy protocols, or
-          may use the same URI for both HTML and ActivityStreams
+          may use the same URI for both HTML and Activity Streams
           representations of a resource).
         </p>
         <p>
@@ -612,14 +612,14 @@
       <p>
         ActivityPub actors are generally one of the
         <a href="https://www.w3.org/TR/activitystreams-vocabulary/#actor-types">
-          ActivityStreams Actor Types</a>,
+          Activity Streams Actor Types</a>,
         but they don't have to be. For example, a
         <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-profile">
           Profile</a> object
-        might be used as an actor, or a type from an ActivityStreams extension.
+        might be used as an actor, or a type from an Activity Streams extension.
         Actors are <a href="#retrieving-objects">retrieved</a> like any other
         Object in ActivityPub.
-        Like other ActivityStreams objects, actors have an <code>id</code>,
+        Like other Activity Streams objects, actors have an <code>id</code>,
         which is a URI.
         When entered directly into a user interface (for example on a login
         form), it is desirable to support simplified naming.
@@ -754,11 +754,11 @@
           <dt id="proxyUrl">proxyUrl</dt>
           <dd>
             Endpoint URI so this actor's clients may access remote
-            ActivityStreams objects which require authentication to access.
+            Activity Streams objects which require authentication to access.
             To use this endpoint, the client posts an
             <code>x-www-form-urlencoded</code> <code>id</code> parameter
             with the value being the <code>id</code> of the requested
-            ActivityStreams object.
+            Activity Streams object.
           </dd>
           <dt id="oauthAuthorizationEndpoint">oauthAuthorizationEndpoint</dt>
           <dd>
@@ -815,7 +815,7 @@
           <p>
             As the upstream vocabulary for ActivityPub, any applicable
             [[!activitystreams-core]] property may be used on ActivityPub Actors.
-            Some ActivityStreams properties are particularly worth highlighting
+            Some Activity Streams properties are particularly worth highlighting
             to demonstrate how they are used in ActivityPub implementations.
           </p>
 
@@ -843,7 +843,7 @@
           such as <code>name</code> or
           <code>summary</code>, make use of
           <a href="https://www.w3.org/TR/activitystreams-core/#naturalLanguageValues">
-            natural language support defined in ActivityStreams</a>.
+            natural language support defined in Activity Streams</a>.
         </p>
       </section>
 
@@ -856,7 +856,7 @@
         defines several collections with special behavior.
         Note that ActivityPub makes use of
         <a href="https://www.w3.org/TR/activitystreams-core/#paging">
-          ActivityStreams paging</a>
+          Activity Streams paging</a>
         to traverse large sets of objects.
       </p>
 
@@ -1049,12 +1049,12 @@
         </p>
         <div class="note">
           <p>
-            Compacting an ActivityStreams object using the ActivityStreams
+            Compacting an Activity Streams object using the Activity Streams
             JSON-LD context might result in
             <code>https://www.w3.org/ns/activitystreams#Public</code>
             being represented as simply <code>Public</code> or <code>as:Public</code>
             which are valid representations of the Public collection.
-            Implementations which treat ActivityStreams objects as simply
+            Implementations which treat Activity Streams objects as simply
             JSON rather than converting an incoming activity over to a
             local context using JSON-LD tooling should be aware of this
             and should be prepared to accept all three representations.
@@ -1192,7 +1192,7 @@ Location: https://dustycloud.org/likes/345
 
       <p id="remove-bto-bcc-before-delivery">
         The server MUST remove the <code>bto</code> and/or <code>bcc</code>
-        properties, if they exist, from the ActivityStreams object before
+        properties, if they exist, from the Activity Streams object before
         delivery, but MUST utilize the addressing originally stored
         on the <code>bto</code> / <code>bcc</code> properties for determining
         recipients in <a href="#delivery">delivery</a>.
@@ -1264,7 +1264,7 @@ Location: https://dustycloud.org/likes/345
     "id": "https://rhiaro.co.uk/2016/05/minimal-activitypub",
     "type": "Article",
     "name": "Minimal ActivityPub update client",
-    "content": "Today I finished morph, a client for posting ActivityStreams2...",
+    "content": "Today I finished morph, a client for posting Activity Streams2...",
     "attributedTo": "<strong>https://rhiaro.co.uk/#amy</strong>",
     "to": "<strong>https://rhiaro.co.uk/followers/</strong>",
     "cc": "<strong>https://e14n.com/evan</strong>"
@@ -1675,7 +1675,7 @@ Location: https://dustycloud.org/likes/345
           inboxes and then posting the activity to those inboxes.
           Targets for delivery are determined by checking the
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#audienceTargeting">
-            ActivityStreams audience targeting</a>;
+            Activity Streams audience targeting</a>;
           namely, the <code>to</code>, <code>bto</code>, <code>cc</code>,
           <code>bcc</code>, and <code>audience</code> fields of the activity.
         </p>
@@ -1742,7 +1742,7 @@ Location: https://dustycloud.org/likes/345
           ActivityPub and Linked Data Notifications, and the targeting
           and delivery systems described in this document are supported
           by Linked Data Notifications.
-          In addition to JSON-LD compacted ActivityStreams documents, Linked
+          In addition to JSON-LD compacted Activity Streams documents, Linked
           Data Notifications also supports a number of RDF serializations
           which are not required for ActivityPub implementations.
           However, ActivityPub implementations which wish to be more broadly
@@ -2073,7 +2073,7 @@ Location: https://dustycloud.org/likes/345
         <p>
           The <code>Undo</code> activity is used to undo the side effects
           of previous activities.
-          See the ActivityStreams documentation on
+          See the Activity Streams documentation on
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#inverse">
             Inverse Activities and "Undo"</a>.
           The scope and restrictions of the <code>Undo</code> activity
@@ -2092,7 +2092,7 @@ Location: https://dustycloud.org/likes/345
         Building an international base of users is important in a federated
         network.
         <a href="https://www.w3.org/TR/activitystreams-core/#naturalLanguageValues">
-          ActivityStreams provides tooling for internationalization of content</a>,
+          Activity Streams provides tooling for internationalization of content</a>,
         which should be used whenever possible.
         However, it can be difficult for implementations to determine which
         <a href="https://www.w3.org/TR/activitystreams-core/#defaultlangcontext">
@@ -2180,7 +2180,7 @@ Location: https://dustycloud.org/likes/345
         <h2>Recursive Objects</h2>
         <p>
           Servers should set a limit on how deep to recurse while resolving objects,
-          or otherwise specially handle ActivityStreams objects with recursive
+          or otherwise specially handle Activity Streams objects with recursive
           references.
 	  Failure to properly do so may result in denial-of-service security
 	  vulnerabilities.
@@ -2290,8 +2290,8 @@ Location: https://dustycloud.org/likes/345
         from the ideas in the
         <a href="https://github.com/pump-io/pump.io/blob/master/API.md">Pump API</a>
         document, mostly as a complete rewrite of text, but sharing most of
-        the primary ideas while switching from ActivityStreams 1 to
-        ActivityStreams 2.
+        the primary ideas while switching from Activity Streams 1 to
+        Activity Streams 2.
       </p>
 
       <p>
