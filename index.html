@@ -362,8 +362,8 @@
     </section>
 
     <section id="conformance">
-      <section id="specification-profiles">
-        <h2>Specification Profiles</h2>
+      <section id="specification-s">
+        <h2>Specification s</h2>
         <p>
           This specification defines two closely related and interacting
           protocols:
@@ -512,11 +512,11 @@
           select the type of data to return in response to a request,
           but MUST present the Activity Streams object representation
           in response to
-          <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>,
+          <code>application/ld+json; ="https://www.w3.org/ns/activitystreams"</code>,
           and SHOULD also present the Activity Streams representation in
           response to <code>application/activity+json</code> as well.
           The client MUST specify an <code>Accept</code> header with the
-          <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
+          <code>application/ld+json; ="https://www.w3.org/ns/activitystreams"</code>
           media type in order to retrieve the object.
         </p>
         <p>
@@ -614,8 +614,8 @@
         <a href="https://www.w3.org/TR/activitystreams-vocabulary/#actor-types">
           Activity Streams Actor Types</a>,
         but they don't have to be. For example, a
-        <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-profile">
-          Profile</a> object
+        <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-">
+          </a> object
         might be used as an actor, or a type from an Activity Streams extension.
         Actors are <a href="#retrieving-objects">retrieved</a> like any other
         Object in ActivityPub.
@@ -653,7 +653,7 @@
         like a bot, or an automated process.
         More detailed "user" modelling, for example linking together of Actors which
         are controlled by the same entity, or allowing one Actor to be presented
-        through multiple alternate profiles or aspects, are at the discretion
+        through multiple alternate s or aspects, are at the discretion
         of the implementation.
       </div>
 
@@ -896,7 +896,7 @@
         <h2>Outbox</h2>
         <p>
           The outbox is discovered through the <code>outbox</code>
-          property of an <a href="#actors">actor's</a> profile.
+          property of an <a href="#actors">actor</a> object.
           The <code>outbox</code> MUST be an
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
             <code>OrderedCollection</code></a>.
