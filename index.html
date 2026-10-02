@@ -1704,9 +1704,9 @@ Location: https://dustycloud.org/likes/345
           however it's recommended that if no recipients are specified the
           object remains completely private and access controls restrict the
           access to object.
-          If the object is just sent to the "public" collection the object is
-          not delivered to any actors but is publicly viewable in the actor's
-          outbox.
+          If the object is just sent to the "public" collection, the object
+          may be publicly viewable in the actor's outbox without being
+          delivered to any actors.
         </p>
 
         <p>
@@ -1769,7 +1769,9 @@ Location: https://dustycloud.org/likes/345
           </ul>
           <p>
             Servers MAY filter activities for privacy, abuse mitigation,
-            or other reasons.
+            or other reasons. Servers MAY deliver objects that are addressed
+            to the <a href="#public-addressing">Public</a> special collection,
+            to additional inboxes.
           </p>
           <p>
             These fields will have been <a href="#client-addressing">
