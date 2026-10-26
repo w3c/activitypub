@@ -796,6 +796,49 @@
             referencing this actor.
             This mapping may be nested inside the actor document as the value
             or may be a link to a JSON-LD document with these properties.
+            <aside id="example-actor-with-embedded-endpoints" class="example" title="An actor with an anonymous embedded endpoints node and extension endpoint">
+            <pre class="highlight json">
+            {
+              "@context": [
+                "https://www.w3.org/ns/activitystreams",
+                "https://extensions.example/calendar"
+              ],
+              "id": "https://social.example/application/17180",
+              "type": "Application",
+              "name": "Calendar Reminder Bot",
+              "inbox": "https://social.example/collection/26623",
+              "outbox": "https://social.example/collection/16231",
+              "endpoints": {
+                "calendarSearch": "https://social.example/api/search/calendar"
+              }
+            }
+            </pre>
+            </aside>
+            <aside id="example-actor-with-linked-endpoints" class="example" title="An actor with a linked endpoints node">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/service/8914",
+              "type": "Service",
+              "name": "Community Weather Alerts",
+              "inbox": "https://social.example/collection/8551",
+              "outbox": "https://social.example/collection/782",
+              "endpoints": "https://social.example/endpoints"
+            }
+            </pre>
+            </aside>
+            <aside id="example-endpoints" class="example" title="An example endpoints object">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/endpoints",
+              "type": "Object",
+              "name": "social.example server-wide endpoints",
+              "sharedInbox": "https://social.example/inbox",
+              "proxyUrl": "https://social.example/proxy"
+            }
+            </pre>
+            </aside>
           </dd>
         </dl>
 
