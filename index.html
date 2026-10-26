@@ -2033,6 +2033,67 @@ Location: https://dustycloud.org/likes/345
             in determining targeting and performing delivery to specific
             inboxes.
           </p>
+         <aside id="example-two-actors-same-sharedinbox-1" class="example" title="An actor with a sharedInbox property">
+            <pre class="json highlight">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/person/7365",
+              "type": "Person",
+              "name": "Actor 1",
+              "inbox": "https://social.example/collection/26452",
+              "outbox": "https://social.example/collection/22448",
+              "endpoints": {
+                "proxyUrl": "https://social.example/proxy",
+                "sharedInbox": "https://hosted.example/inbox"
+              }
+            }
+            </pre>
+          </aside>
+          <aside id="example-two-actors-same-sharedinbox-2" class="example" title="A second actor with the same sharedInbox property">
+            <pre class="json highlight">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://remote.example/user/foo",
+              "type": "Person",
+              "name": "Actor 2",
+              "inbox": "https://remote.example/user/foo/inbox",
+              "outbox": "https://remote.example/user/foo/outbox",
+              "endpoints": {
+                "sharedInbox": "https://hosted.example/inbox"
+              }
+            }
+            </pre>
+          </aside>
+          <aside id="example-two-actors-same-sharedinbox-post" class="example" title="An activity delivered to both actors at the sharedInbox endpoint. A fictional authentication method is provided for identity.">
+            <pre class="http highlight">
+            POST /inbox HTTP/1.1
+            Content-Type: application/activity+json
+            Content-Length: 646
+            Host: hosted.example
+            Authorization: X-Example identity="https://third.example/actor/01M5WAGY8B9WF91KRYV70KW56Q", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://third.example/create/01M5WAJ1F3CTGE1WX375MMQJ0W",
+              "type": "Create",
+              "actor": "https://third.example/actor/01M5WAGY8B9WF91KRYV70KW56Q",
+              "to": [
+                "https://social.example/person/7365",
+                "https://remote.example/user/foo"
+              ],
+              "object": {
+                "id": "https://third.example/note/01M5WAJ1F3R3PVDW4P6SHGAZ8M",
+                "type": "Note",
+                "attributedTo": "https://third.example/actor/01M5WAGY8B9WF91KRYV70KW56Q",
+                "to": [
+                  "https://social.example/person/7365",
+                  "https://remote.example/user/foo"
+                ],
+                "content": "Hello friends!"
+              }
+            }
+            </pre>
+          </aside>
           <p>
             Additionally, if an object is addressed to the
             <a href="#public-addressing">Public</a> special collection, a
@@ -2048,6 +2109,36 @@ Location: https://dustycloud.org/likes/345
             and would not otherwise receive the activity through the
             <code>sharedInbox</code> mechanism.
           </p>
+          <aside id="example-public-sharedinbox" class="example" title="A public activity delivered to a sharedInbox. A fictional authentication method is provided for identity.">
+            <pre class="http highlight">
+            POST /inbox HTTP/1.1
+            Content-Type: application/activity+json
+            Content-Length: 663
+            Host: hosted.example
+            Authorization: X-Example identity="https://worldnews.example/", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://worldnews.example/create/ceasefire-announced-24019",
+              "type": "Create",
+              "actor": "https://worldnews.example/",
+              "to": "as:Public",
+              "object": {
+                "id": "https://worldnews.example/article/ceasefire-announced-24019",
+                "type": "Article",
+                "attributedTo": "https://worldnews.example/",
+                "to": "as:Public",
+                "name": "Ceasefire Announced in Conflict Region",
+                "summary": "Combatants have agreed to a temporary ceasefire.",
+                "url": {
+                  "type": "Link",
+                  "mediaType": "text/html",
+                  "href": "https://worldnews.example/page/24019"
+                }
+              }
+            }
+            </pre>
+          </aside>
         </section>
       </section>
 
