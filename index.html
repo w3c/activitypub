@@ -759,6 +759,35 @@
           <dd>
             A short username which may be used to refer to the actor, with no
             uniqueness guarantees.
+            <aside id="example-ascii-preferred-username" class="example" title="An actor with a preferredUsername using only ASCII characters">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/person/25223",
+              "type": "Person",
+              "name": "Siti Rahmawati",
+              "inbox": "https://social.example/collection/18539",
+              "outbox": "https://social.example/collection/28489",
+              "preferredUsername": "sitir98"
+            }
+            </pre>
+            </aside>
+            <aside id="example-non-ascii-preferred-username" class="example" title="An actor with a non-ASCII preferredUsername">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/person/7982",
+              "type": "Person",
+              "nameMap": {
+                "en": "Wáng Xiǎomíng",
+                "zh": "王小明"
+              },
+              "inbox": "https://social.example/collection/5189",
+              "outbox": "https://social.example/collection/31264",
+              "preferredUsername": "追风少年"
+            }
+            </pre>
+            </aside>
           </dd>
           <dt id="endpoints">endpoints</dt>
           <dd>
