@@ -1936,6 +1936,80 @@ Location: https://dustycloud.org/likes/345
             The server MAY filter its delivery targets according to
             implementation-specific rules (for example, spam filtering).
           </p>
+
+          <aside class="example" title="A reply to a followers-only post that should be forwarded. The fictional authorization format shows the sender identity.">
+            <pre class="http highlight">
+            POST /user/foo/inbox HTTP/1.1
+            Content-Type: application/activity+json
+            Content-Length: 809
+            Host: social.example
+            Authorization: X-Example identity="https://remote.example/actor/414", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://remote.example/create/18776",
+              "type": "Create",
+              "actor": "https://remote.example/actor/414",
+              "to": [
+                "https://social.example/user/foo",
+                "https://social.example/user/foo/followers"
+              ],
+              "object": {
+                "id": "https://remote.example/note/14803",
+                "type": "Note",
+                "attributedTo": "https://remote.example/actor/414",
+                "to": [
+                  "https://social.example/user/foo",
+                  "https://social.example/user/foo/followers"
+                ],
+                "inReplyTo": {
+                    "id": "https://social.example/user/foo/article/24942",
+                    "type": "Article",
+                    "attributedTo": "https://social.example/user/foo",
+                    "to": "https://social.example/user/foo/followers"
+                },
+                "content": "I agree!"
+              }
+            }
+            </pre>
+          </aside>
+
+          <aside class="example" title="The same activity forwarded by the original poster to one of their followers">
+            <pre class="http highlight">
+            POST /actor/a8c347d9-426a-42e8-8d92-43ea043cf3c0/inbox HTTP/1.1
+            Content-Type: application/activity+json
+            Content-Length: 809
+            Host: third.example
+            Authorization: X-Example identity="https://social.example/user/foo", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://remote.example/create/18776",
+              "type": "Create",
+              "actor": "https://remote.example/actor/414",
+              "to": [
+                "https://social.example/user/foo",
+                "https://social.example/user/foo/followers"
+              ],
+              "object": {
+                "id": "https://remote.example/note/14803",
+                "type": "Note",
+                "attributedTo": "https://remote.example/actor/414",
+                "to": [
+                  "https://social.example/user/foo",
+                  "https://social.example/user/foo/followers"
+                ],
+                "inReplyTo": {
+                    "id": "https://social.example/user/foo/article/24942",
+                    "type": "Article",
+                    "attributedTo": "https://social.example/user/foo",
+                    "to": "https://social.example/user/foo/followers"
+                },
+                "content": "I agree!"
+              }
+            }
+            </pre>
+          </aside>
         </section>
 
         <section id="shared-inbox-delivery">
