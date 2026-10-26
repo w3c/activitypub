@@ -730,6 +730,30 @@
           <dt id="streams-property">streams</dt>
           <dd>
             A list of supplementary Collections which may be of interest.
+            <aside title="An actor with a streams property">
+            <pre class="example highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/group/27635",
+              "type": "Organization",
+              "name": "Whitewater Rafting Club",
+              "inbox": "https://social.example/collection/15751",
+              "outbox": "https://social.example/collection/31378",
+              "streams": [
+                {
+                  "id": "https://social.example/collection/14014",
+                  "type": "Collection",
+                  "name": "Ocoee River trip 2026 photos"
+                },
+                {
+                  "id": "https://social.example/collection/6108",
+                  "type": "Collection",
+                  "name": "Bylaws and other legal documents"
+                }
+              ]
+            }
+            </pre>
+            </aside>
           </dd>
           <dt id="preferredUsername">preferredUsername</dt>
           <dd>
