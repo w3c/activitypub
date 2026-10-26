@@ -1156,6 +1156,21 @@
             and should be prepared to accept all three representations.
           </p>
         </div>
+        <aside id="example-public-addressing" class="example" title="A Like activity addressed to the Public special collection">
+            <pre class="json highlight">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/like/26347",
+              "type": "Like",
+              "actor": "https://social.example/organization/12747",
+              "object": "https://remote.example/user/16448/note/26384",
+              "to": [
+                "https://remote.example/user/16448",
+                "as:Public"
+              ]
+            }
+            </pre>
+          </aside>
       </section>
 
       <section id="likes">
