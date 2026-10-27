@@ -1536,6 +1536,26 @@ Location: https://dustycloud.org/likes/345
               interactions</a>
             for more details.
           </p>
+          <aside id="example-partial-update" class="example" title="A partial update of an Event object, including only the endTime property. The authorization format is fictional, to illustrate the identity of the requester.">
+            <pre class="http highlight">
+            POST /user/26445/outbox HTTP/1.1
+            Host: social.example
+            Content-Type: application/activity+json
+            Content-Length: 244
+            Authorization: X-Example identity="https://social.example/user/26445", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "type": "Update",
+              "to": "https://social.example/user/26445/followers",
+              "object": {
+                "id": "https://social.example/event/4156",
+                "endTime": "2026-10-27T22:30:00Z"
+              }
+            }
+            </pre>
+          </aside>
+          <p>See <a href="#example-update-activity-inbox"></a> for an example of this <code>Update</code> activity posted to one of the creator's followers.</p>
         </section>
       </section>
       <section id="delete-activity-outbox">
@@ -2188,6 +2208,42 @@ Location: https://dustycloud.org/likes/345
           At minimum, this may be done by ensuring that the <code>Update</code>
           and its <code>object</code> are of same origin.
         </p>
+        <p>In this example, the partial update from <a href="#example-partial-update"></a> is posted to the <code>inbox</code> endpoint of one of the author's followers.</p>
+
+        <aside id="example-update-activity-inbox" class="example" title="An update activity posted to the inbox of one of the creator's followers.">
+            <pre class="http highlight">
+            POST /actor/01M5YV9JF97420Z0YEVQAV9A9B/inbox HTTP/1.1
+            Host: remote.example
+            Content-Type: application/activity+json
+            Content-Length: 900
+            Authorization: X-Example identity="https://social.example/user/26445", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/update/32557",
+              "type": "Update",
+              "actor": "https://social.example/user/26445",
+              "to": "https://social.example/user/26445/followers",
+              "summaryMap": {
+                "en": "Eric changed the end time of ActivityPub Meetup to 3:30 PM PDT"
+              },
+              "object": {
+                "id": "https://social.example/event/4156",
+                "type": "Event",
+                "name": "ActivityPub Meetup",
+                "attributedTo": "https://social.example/user/26445",
+                "to": "https://social.example/user/26445/followers",
+                "summary": "Portland ActivityPub community get-together",
+                "startTime": "2026-10-27T20:30:00Z",
+                "endTime": "2026-10-27T22:30:00Z",
+                "location": "https://places.example/pdx/cafe/29410",
+                "published": "2026-10-12T18:35:08Z",
+                "updated": "2026-10-19T12:44:34Z"
+              },
+              "published": "2026-10-19T12:44:34Z"
+            }
+            </pre>
+          </aside>
       </section>
 
       <section id="delete-activity-inbox">
