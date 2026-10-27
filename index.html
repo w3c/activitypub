@@ -519,6 +519,56 @@
           <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
           media type in order to retrieve the object.
         </p>
+        <aside id="example-http-get-request" class="example" title="An HTTP GET request for an ActivityPub object with id https://social.example/image/26582 using bearer token authorization">
+          <pre class="http highlight">
+          GET /image/26582 HTTP/1.1
+          Host: social.example
+          Accept: application/activity+json, application/ld+json; profile="https://www.w3.org/ns/activitystreams"; q=0.9
+          Authorization: Bearer v7Qm2xK9pR4nT8wL3zY6
+          </pre>
+        </aside>
+        <aside id="example-http-get-response" class="example" title="An HTTP response for the previous request">
+          <pre class="http highlight">
+          HTTP/1.1 200 OK
+          Date: Tue, 27 Oct 2026 14:35:00 GMT
+          Cache-Control: private
+          Content-Type: application/activity+json
+          Content-Length: 847
+          Last-Modified: Tue, 27 Oct 2026 14:30:00 GMT
+          Vary: Accept, Authorization, Cookie
+
+          {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "id": "https://social.example/image/26582",
+            "type": "Image",
+            "nameMap": {
+              "en": "Geoff and Erica at the Harbour Wall"
+            },
+            "summaryMap": {
+              "en": "A man and a woman standing by a wall at the seaside"
+            },
+            "to": "https://social.example/user/8252/followers",
+            "attributedTo": "https://social.example/user/8252",
+            "location": "https://geo.example/gb/gblyr/32710",
+            "url": [
+              {
+                "type": "Link",
+                "mediaType": "image/jpeg",
+                "width": 1200,
+                "height": 800,
+                "href": "https://media.social.example/upload/26488.jpg"
+              },
+              {
+                "type": "Link",
+                "mediaType": "text/html",
+                "href": "https://social.example/image/26582"
+              }
+            ],
+            "published": "2026-10-27T14:12:38Z",
+            "updated": "2026-10-27T14:30:00Z"
+          }
+          </pre>
+        </aside>
         <p>
           Servers MAY implement other behavior for requests which do not comply
           with the above requirement.
@@ -526,6 +576,45 @@
           may use the same URI for both HTML and Activity Streams
           representations of a resource).
         </p>
+        <aside id="example-http-get-request-html" class="example" title="An HTTP GET request for the HTML representation of the image resource in the previous example, using Cookie authentication">
+          <pre class="http highlight">
+          GET /image/26582 HTTP/1.1
+          Host: social.example
+          Accept: text/html
+          Cookie: session=K7mQ2vR9xT4n
+          </pre>
+        </aside>
+        <aside id="example-http-get-response-html" class="example" title="An HTTP response from a server to a request for https://social.example/image/26582">
+          <pre class="http highlight">
+          HTTP/1.1 200 OK
+          Date: Tue, 27 Oct 2026 14:35:00 GMT
+          Cache-Control: private
+          Content-Type: text/html
+          Content-Length: 728
+          Last-Modified: Tue, 27 Oct 2026 14:30:00 GMT
+          Vary: Accept, Authorization, Cookie
+
+          &lt;!DOCTYPE html&gt;
+          &lt;html lang="en"&gt;
+            &lt;head&gt;
+              &lt;meta charset="utf-8"&gt;
+              &lt;title&gt;Geoff and Erica at the Harbour Wall&lt;/title&gt;
+              &lt;link rel="alternate" type="application/activity+json"
+                href="https://social.example/image/26582"&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+              &lt;h1&gt;Geoff and Erica at the Harbour Wall&lt;/h1&gt;
+
+              &lt;img width="1200" height="800"
+                src="https://media.social.example/upload/26488.jpg"
+                alt="A man and a woman standing by a wall at the seaside"
+              &gt;
+              &lt;p&gt;By &lt;a href="https://social.example/user/8252"&gt;Ian R.&lt;/a&gt; at &lt;a href="https://geo.example/gb/gblyr/32710"&gt;Lyme Regis Cobb&lt;/a&gt;&lt;/p&gt;
+              &lt;p&gt;Updated &lt;time datetime="2026-10-27T14:30:00Z"&gt;27 October 2026 at 14:30 GMT&lt;/time&gt;&lt;/p&gt;
+            &lt;/body&gt;
+          &lt;/html&gt;
+          </pre>
+        </aside>
         <p>
           Servers MAY require authorization as specified in
           <a href="#authorization"></a>, and may additionally implement their
@@ -537,6 +626,30 @@
           a private target MAY instead respond with a status code of
           404 Not Found.
         </p>
+        <aside id="example-http-get-request-unauthorized" class="example" title="An HTTP GET request for an ActivityPub object with id https://social.example/image/26582 without authorization">
+          <pre class="http highlight">
+          GET /image/26582 HTTP/1.1
+          Host: social.example
+          Accept: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
+          </pre>
+        </aside>
+        <aside id="example-http-get-response-unauthorized" class="example" title="An HTTP GET response for an ActivityPub object with id https://social.example/image/26582 without authorization">
+          <pre class="http highlight">
+          HTTP/1.1 404 Not Found
+          Date: Tue, 27 Oct 2026 14:35:00 GMT
+          Cache-Control: private
+          Content-Type: application/problem+json
+          Content-Length: 131
+          Vary: Accept, Authorization, Cookie
+
+          {
+            "type": "about:blank",
+            "title": "Not Found",
+            "status": 404,
+            "detail": "The requested resource could not be found."
+          }
+          </pre>
+        </aside>
       </section>
 
       <section id="source-property">
