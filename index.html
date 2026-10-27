@@ -1192,6 +1192,89 @@
           or as appropriate when no authentication is given.
         </p>
 
+        <aside id="example-followers-collection" class="example" title="A Collection object representing the followers of an actor. It includes the items property directly, showing an embedded node for each follower.">
+          <pre class="json highlight">
+          {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "id": "https://social.example/collection/a21a151b-5d52-4b1f-9c89-7fbf9de29a24",
+            "type": "Collection",
+            "attributedTo": "https://social.example/actor/f02da1bd-0ec1-4fc3-9122-9eaa176346ce",
+            "summaryMap": {
+              "en": "Followers of Ivan Petrov",
+              "ru": "Подписчики Ивана Петрова"
+            },
+            "to": "as:Public",
+            "totalItems": 3,
+            "items": [
+              {
+                "id": "https://social.example/actor/2a53b381-40de-4911-9c94-df6f8fe14ad3",
+                "type": "Person",
+                "name": "Айдар Каримов"
+              },
+              {
+                "id": "https://river.example/app/reader",
+                "type": "Application",
+                "name": "River Reader"
+              },
+              {
+                "id": "https://remote.example/user/małgorzata",
+                "type": "Person",
+                "name": "Małgorzata Wiśniewska"
+              }
+            ],
+            "published": "2024-06-18T14:30:00Z",
+            "updated": "2026-02-09T10:15:00Z"
+          }
+          </pre>
+        </aside>
+
+        <aside id="example-followers-ordered-collection" class="example" title="An OrderedCollection object representing the followers of an organization. It uses pages to show the individual followers.">
+          <pre class="json highlight">
+          {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "id": "https://ordered.example/collection/993263",
+            "type": "OrderedCollection",
+            "attributedTo": "https://ordered.example/organization/514688",
+            "summary": "Fans of Wildflower & Wing Conservation Society",
+            "to": "as:Public",
+            "totalItems": 730584,
+            "first": "https://ordered.example/page/518255",
+            "last": "https://ordered.example/page/750367",
+            "current": "https://ordered.example/page/518255",
+            "published": "2018-05-22T09:00:00Z",
+            "updated": "2026-09-16T14:25:00Z"
+          }
+          </pre>
+        </aside>
+
+        <aside id="example-followers-ordered-collection-page" class="example" title="An OrderedCollectionPage object representing a page of the collection from the previous example.">
+          <pre class="json highlight">
+          {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "id": "https://ordered.example/page/966515",
+            "type": "OrderedCollectionPage",
+            "attributedTo": "https://ordered.example/organization/514688",
+            "summary": "Page of Fans of Wildflower & Wing Conservation Society",
+            "to": "as:Public",
+            "partOf": "https://ordered.example/collection/993263",
+            "next": "https://ordered.example/page/857318",
+            "prev": "https://ordered.example/page/488438",
+            "orderedItems": [
+              "https://friends.example/actor/z-cpgP9y4k3CtblYLa2JW",
+              "https://community.example/user/admin8",
+              "https://photos.example/user/432116",
+              "https://chat.example/ca61aaa6-a229-4260-9d83-dcb01257d5c0",
+              "https://neighbours.example/person/2021/12/18/562434",
+              "https://gather.example/person/K7mQ2vR9",
+              "https://ordered.example/group/074893",
+              "https://photos.example/user/513685"
+            ],
+            "published": "2023-06-12T09:30:00Z",
+            "updated": "2023-06-15T14:45:00Z"
+          }
+          </pre>
+        </aside>
+
         <p class="note" title="Default for notification targeting">
           The follow activity generally is a request to see the objects an actor
           creates. This makes the Followers collection an appropriate default
