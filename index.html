@@ -523,7 +523,7 @@
           <pre class="http highlight">
           GET /image/26582 HTTP/1.1
           Host: social.example
-          Accept: application/activity+json, application/ld+json; profile="https://www.w3.org/ns/activitystreams"; q=0.9
+          Accept: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
           Authorization: Bearer v7Qm2xK9pR4nT8wL3zY6
           </pre>
         </aside>
@@ -532,7 +532,7 @@
           HTTP/1.1 200 OK
           Date: Tue, 27 Oct 2026 14:35:00 GMT
           Cache-Control: private
-          Content-Type: application/activity+json
+          Content-Type: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
           Content-Length: 847
           Last-Modified: Tue, 27 Oct 2026 14:30:00 GMT
           Vary: Accept, Authorization, Cookie
@@ -590,7 +590,7 @@
           Date: Tue, 27 Oct 2026 14:35:00 GMT
           Cache-Control: private
           Content-Type: text/html
-          Content-Length: 728
+          Content-Length: 832
           Last-Modified: Tue, 27 Oct 2026 14:30:00 GMT
           Vary: Accept, Authorization, Cookie
 
@@ -609,8 +609,12 @@
                 src="https://media.social.example/upload/26488.jpg"
                 alt="A man and a woman standing by a wall at the seaside"
               &gt;
-              &lt;p&gt;By &lt;a href="https://social.example/user/8252"&gt;Ian R.&lt;/a&gt; at &lt;a href="https://geo.example/gb/gblyr/32710"&gt;Lyme Regis Cobb&lt;/a&gt;&lt;/p&gt;
-              &lt;p&gt;Updated &lt;time datetime="2026-10-27T14:30:00Z"&gt;27 October 2026 at 14:30 GMT&lt;/time&gt;&lt;/p&gt;
+              &lt;p&gt;
+                By &lt;a href="https://social.example/user/8252"&gt;Ian R.&lt;/a&gt;
+                at &lt;a href="https://geo.example/gb/gblyr/32710"&gt;Lyme Regis Cobb&lt;/a&gt;&lt;/p&gt;
+                on &lt;time datetime="2026-10-27T14:12:38Z"&gt;27 October 2026 at 14:12 GMT&lt;/time&gt;)
+                (edit &lt;time datetime="2026-10-27T14:30:00Z"&gt;27 October 2026 at 14:30 GMT&lt;/time&gt;)
+              &lt;/p&gt;
             &lt;/body&gt;
           &lt;/html&gt;
           </pre>
