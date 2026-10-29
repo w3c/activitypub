@@ -336,13 +336,13 @@
    "type": "Create",
    "id": "https://social.example/alyssa/posts/9282e9cc-14d0-42b3-a758-d6aeca6c876b",
    "to": ["https://social.example/alyssa/followers/",
-          "https://www.w3.org/ns/activitystreams#Public"],
+          "as:Public"],
    "actor": "https://social.example/alyssa/",
    "object": {"type": "Note",
               "id": "https://social.example/alyssa/posts/d18c55d4-8a63-4181-9745-4e6cf7938fa1",
               "attributedTo": "https://social.example/alyssa/",
               "to": ["https://social.example/alyssa/followers/",
-                     "https://www.w3.org/ns/activitystreams#Public"],
+                     "as:Public"],
               "content": "Lending books to friends is nice.  Getting them back is even nicer! :)"}}
       </pre>
 
@@ -1032,7 +1032,7 @@
         <pre class="example">
           {
             "@context": "https://www.w3.org/ns/activitystreams",
-            "id": "https://www.w3.org/ns/activitystreams#Public",
+            "id": "as:Public",
             "type": "Collection"
           }
         </pre>
@@ -1364,7 +1364,7 @@ Location: https://dustycloud.org/likes/345
           "published": "2015-02-10T15:04:55Z",
           "to": ["https://example.org/~john/"],
           "cc": ["https://example.com/~erik/followers",
-                 "https://www.w3.org/ns/activitystreams#Public"]
+                 "as:Public"]
         }
         </pre>
 
@@ -1383,12 +1383,12 @@ Location: https://dustycloud.org/likes/345
             "published": "2015-02-10T15:04:55Z",
             "to": ["https://example.org/~john/"],
             "cc": ["https://example.com/~erik/followers",
-                   "https://www.w3.org/ns/activitystreams#Public"]
+                   "as:Public"]
           },
           "published": "2015-02-10T15:04:55Z",
           "to": ["https://example.org/~john/"],
           "cc": ["https://example.com/~erik/followers",
-                 "https://www.w3.org/ns/activitystreams#Public"]
+                 "as:Public"]
         }
         </pre>
         </section>
