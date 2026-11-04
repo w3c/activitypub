@@ -926,7 +926,7 @@
 
         <p>
           The inbox is discovered through the <code>inbox</code>
-          property of an <a href="#actors">actor's</a> profile.
+          property of an <a href="#actors">actor</a>.
           The <code>inbox</code> MUST be an
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
             <code>OrderedCollection</code></a>.
@@ -1142,7 +1142,7 @@
         Client to server interaction takes place through clients posting
         Activities to an actor's <a href="#outbox">outbox</a>.
         To do this, clients MUST discover the URL of the actor's outbox from
-	their <a href="#actor-objects">profile</a> and then MUST make an HTTP
+	their <a href="#actor-objects">actor object</a> and then MUST make an HTTP
         <code>POST</code> request to this URL with the Content-Type of
         <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>.
         Servers MAY interpret a Content-Type or Accept header of
