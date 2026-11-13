@@ -2,8 +2,8 @@ module.exports = async ({ github, context, core }) => {
   const repo = context.repo;
   let prs = [];
 
-  // Determine if triggered by a pull_request event or a cron schedule
-  if (context.eventName === 'pull_request') {
+  // Determine if triggered by a pull request event or a cron schedule
+  if (['pull_request', 'pull_request_target'].includes(context.eventName)) {
     prs = [context.payload.pull_request];
   } else if (context.eventName === 'schedule' || context.eventName === 'workflow_dispatch') {
     // Fetch all open PRs for cron processing
@@ -30,7 +30,7 @@ module.exports = async ({ github, context, core }) => {
     let updated = false;
 
     // --- EVENT: PR Opened or Ready for Review ---
-    if (context.eventName === 'pull_request' && ['opened', 'ready_for_review'].includes(context.payload.action)) {
+    if (['pull_request', 'pull_request_target'].includes(context.eventName) && ['opened', 'ready_for_review'].includes(context.payload.action)) {
       if (context.payload.action === 'ready_for_review' || !metadata.staleTimerEnd) {
         // Every new PR or newly ready PR gets a `WD-needs-class` tag and a 28-day Stale PR timer
         await github.rest.issues.addLabels({
@@ -61,7 +61,7 @@ module.exports = async ({ github, context, core }) => {
     }
 
     // --- EVENT: PR Labelled ---
-    if (context.eventName === 'pull_request' && context.payload.action === 'labeled') {
+    if (['pull_request', 'pull_request_target'].includes(context.eventName) && context.payload.action === 'labeled') {
       const labelName = context.payload.label.name;
       const sender = context.payload.sender ? context.payload.sender.login : 'Someone';
 
