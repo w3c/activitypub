@@ -1,0 +1,26 @@
+name: PR Triage and Lifecycle Automation
+on:
+  pull_request:
+    types: [opened, ready_for_review, labeled]
+  schedule:
+    - cron: '*/5 * * * *' # Runs every ~5 minutes
+  workflow_dispatch:
+
+jobs:
+  manage-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run PR Lifecycle and Triage Logic
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const script = require('./.github/scripts/pr-lifecycle.js');
+            await script({ github, context, core });
