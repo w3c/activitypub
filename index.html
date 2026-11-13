@@ -519,6 +519,56 @@
           <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
           media type in order to retrieve the object.
         </p>
+        <aside id="example-http-get-request" class="example" title="An HTTP GET request for an ActivityPub object with id https://social.example/image/26582 using bearer token authorization">
+          <pre class="http highlight">
+          GET /image/26582 HTTP/1.1
+          Host: social.example
+          Accept: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
+          Authorization: Bearer v7Qm2xK9pR4nT8wL3zY6
+          </pre>
+        </aside>
+        <aside id="example-http-get-response" class="example" title="An HTTP response for the previous request">
+          <pre class="http highlight">
+          HTTP/1.1 200 OK
+          Date: Tue, 27 Oct 2026 14:35:00 GMT
+          Cache-Control: private
+          Content-Type: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
+          Content-Length: 847
+          Last-Modified: Tue, 27 Oct 2026 14:30:00 GMT
+          Vary: Accept, Authorization, Cookie
+
+          {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "id": "https://social.example/image/26582",
+            "type": "Image",
+            "nameMap": {
+              "en": "Geoff and Erica at the Harbour Wall"
+            },
+            "summaryMap": {
+              "en": "A man and a woman standing by a wall at the seaside"
+            },
+            "to": "https://social.example/user/8252/followers",
+            "attributedTo": "https://social.example/user/8252",
+            "location": "https://geo.example/gb/gblyr/32710",
+            "url": [
+              {
+                "type": "Link",
+                "mediaType": "image/jpeg",
+                "width": 1200,
+                "height": 800,
+                "href": "https://media.social.example/upload/26488.jpg"
+              },
+              {
+                "type": "Link",
+                "mediaType": "text/html",
+                "href": "https://social.example/image/26582"
+              }
+            ],
+            "published": "2026-10-27T14:12:38Z",
+            "updated": "2026-10-27T14:30:00Z"
+          }
+          </pre>
+        </aside>
         <p>
           Servers MAY implement other behavior for requests which do not comply
           with the above requirement.
@@ -526,6 +576,49 @@
           may use the same URI for both HTML and Activity Streams
           representations of a resource).
         </p>
+        <aside id="example-http-get-request-html" class="example" title="An HTTP GET request for the HTML representation of the image resource in the previous example, using Cookie authentication">
+          <pre class="http highlight">
+          GET /image/26582 HTTP/1.1
+          Host: social.example
+          Accept: text/html
+          Cookie: session=K7mQ2vR9xT4n
+          </pre>
+        </aside>
+        <aside id="example-http-get-response-html" class="example" title="An HTTP response from a server to a request for https://social.example/image/26582">
+          <pre class="http highlight">
+          HTTP/1.1 200 OK
+          Date: Tue, 27 Oct 2026 14:35:00 GMT
+          Cache-Control: private
+          Content-Type: text/html
+          Content-Length: 832
+          Last-Modified: Tue, 27 Oct 2026 14:30:00 GMT
+          Vary: Accept, Authorization, Cookie
+
+          &lt;!DOCTYPE html&gt;
+          &lt;html lang="en"&gt;
+            &lt;head&gt;
+              &lt;meta charset="utf-8"&gt;
+              &lt;title&gt;Geoff and Erica at the Harbour Wall&lt;/title&gt;
+              &lt;link rel="alternate" type="application/activity+json"
+                href="https://social.example/image/26582"&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+              &lt;h1&gt;Geoff and Erica at the Harbour Wall&lt;/h1&gt;
+
+              &lt;img width="1200" height="800"
+                src="https://media.social.example/upload/26488.jpg"
+                alt="A man and a woman standing by a wall at the seaside"
+              &gt;
+              &lt;p&gt;
+                By &lt;a href="https://social.example/user/8252"&gt;Ian R.&lt;/a&gt;
+                at &lt;a href="https://geo.example/gb/gblyr/32710"&gt;Lyme Regis Cobb&lt;/a&gt;&lt;/p&gt;
+                on &lt;time datetime="2026-10-27T14:12:38Z"&gt;27 October 2026 at 14:12 GMT&lt;/time&gt;)
+                (edit &lt;time datetime="2026-10-27T14:30:00Z"&gt;27 October 2026 at 14:30 GMT&lt;/time&gt;)
+              &lt;/p&gt;
+            &lt;/body&gt;
+          &lt;/html&gt;
+          </pre>
+        </aside>
         <p>
           Servers MAY require authorization as specified in
           <a href="#authorization"></a>, and may additionally implement their
@@ -537,6 +630,30 @@
           a private target MAY instead respond with a status code of
           404 Not Found.
         </p>
+        <aside id="example-http-get-request-unauthorized" class="example" title="An HTTP GET request for an ActivityPub object with id https://social.example/image/26582 without authorization">
+          <pre class="http highlight">
+          GET /image/26582 HTTP/1.1
+          Host: social.example
+          Accept: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
+          </pre>
+        </aside>
+        <aside id="example-http-get-response-unauthorized" class="example" title="An HTTP GET response for an ActivityPub object with id https://social.example/image/26582 without authorization">
+          <pre class="http highlight">
+          HTTP/1.1 404 Not Found
+          Date: Tue, 27 Oct 2026 14:35:00 GMT
+          Cache-Control: private
+          Content-Type: application/problem+json
+          Content-Length: 131
+          Vary: Accept, Authorization, Cookie
+
+          {
+            "type": "about:blank",
+            "title": "Not Found",
+            "status": 404,
+            "detail": "The requested resource could not be found."
+          }
+          </pre>
+        </aside>
       </section>
 
       <section id="source-property">
@@ -730,11 +847,64 @@
           <dt id="streams-property">streams</dt>
           <dd>
             A list of supplementary Collections which may be of interest.
+            <aside id="example-actor-with-streams" class="example" title="An actor with a streams property">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/organization/27635",
+              "type": "Organization",
+              "name": "Whitewater Rafting Club",
+              "inbox": "https://social.example/collection/15751",
+              "outbox": "https://social.example/collection/31378",
+              "streams": [
+                {
+                  "id": "https://social.example/collection/14014",
+                  "type": "Collection",
+                  "name": "Ocoee River trip 2026 photos"
+                },
+                {
+                  "id": "https://social.example/collection/6108",
+                  "type": "Collection",
+                  "name": "Bylaws and other legal documents"
+                }
+              ]
+            }
+            </pre>
+            </aside>
           </dd>
           <dt id="preferredUsername">preferredUsername</dt>
           <dd>
             A short username which may be used to refer to the actor, with no
             uniqueness guarantees.
+            <aside id="example-ascii-preferred-username" class="example" title="An actor with a preferredUsername using only ASCII characters">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/person/25223",
+              "type": "Person",
+              "name": "Siti Rahmawati",
+              "inbox": "https://social.example/collection/18539",
+              "outbox": "https://social.example/collection/28489",
+              "preferredUsername": "sitir98"
+            }
+            </pre>
+            </aside>
+            <aside id="example-non-ascii-preferred-username" class="example" title="An actor with a non-ASCII preferredUsername">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/person/7982",
+              "type": "Person",
+              "nameMap": {
+                "en": "Wáng Xiǎomíng",
+                "zh": "王小明"
+              },
+              "inbox": "https://social.example/collection/5189",
+              "outbox": "https://social.example/collection/31264",
+              "preferredUsername": "追风少年"
+            }
+            </pre>
+            </aside>
           </dd>
           <dt id="endpoints">endpoints</dt>
           <dd>
@@ -743,6 +913,49 @@
             referencing this actor.
             This mapping may be nested inside the actor document as the value
             or may be a link to a JSON-LD document with these properties.
+            <aside id="example-actor-with-embedded-endpoints" class="example" title="An actor with an anonymous embedded endpoints node and extension endpoint">
+            <pre class="highlight json">
+            {
+              "@context": [
+                "https://www.w3.org/ns/activitystreams",
+                "https://extensions.example/calendar"
+              ],
+              "id": "https://social.example/application/17180",
+              "type": "Application",
+              "name": "Calendar Reminder Bot",
+              "inbox": "https://social.example/collection/26623",
+              "outbox": "https://social.example/collection/16231",
+              "endpoints": {
+                "calendarSearch": "https://social.example/api/search/calendar"
+              }
+            }
+            </pre>
+            </aside>
+            <aside id="example-actor-with-linked-endpoints" class="example" title="An actor with a linked endpoints node">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/service/8914",
+              "type": "Service",
+              "name": "Community Weather Alerts",
+              "inbox": "https://social.example/collection/8551",
+              "outbox": "https://social.example/collection/782",
+              "endpoints": "https://social.example/endpoints"
+            }
+            </pre>
+            </aside>
+            <aside id="example-endpoints" class="example" title="An example endpoints object">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/endpoints",
+              "type": "Object",
+              "name": "social.example server-wide endpoints",
+              "sharedInbox": "https://social.example/inbox",
+              "proxyUrl": "https://social.example/proxy"
+            }
+            </pre>
+            </aside>
           </dd>
         </dl>
 
@@ -979,6 +1192,89 @@
           or as appropriate when no authentication is given.
         </p>
 
+        <aside id="example-followers-collection" class="example" title="A Collection object representing the followers of an actor. It includes the items property directly, showing an embedded node for each follower.">
+          <pre class="json highlight">
+          {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "id": "https://social.example/collection/a21a151b-5d52-4b1f-9c89-7fbf9de29a24",
+            "type": "Collection",
+            "attributedTo": "https://social.example/actor/f02da1bd-0ec1-4fc3-9122-9eaa176346ce",
+            "summaryMap": {
+              "en": "Followers of Ivan Petrov",
+              "ru": "Подписчики Ивана Петрова"
+            },
+            "to": "as:Public",
+            "totalItems": 3,
+            "items": [
+              {
+                "id": "https://social.example/actor/2a53b381-40de-4911-9c94-df6f8fe14ad3",
+                "type": "Person",
+                "name": "Айдар Каримов"
+              },
+              {
+                "id": "https://river.example/app/reader",
+                "type": "Application",
+                "name": "River Reader"
+              },
+              {
+                "id": "https://remote.example/user/małgorzata",
+                "type": "Person",
+                "name": "Małgorzata Wiśniewska"
+              }
+            ],
+            "published": "2024-06-18T14:30:00Z",
+            "updated": "2026-02-09T10:15:00Z"
+          }
+          </pre>
+        </aside>
+
+        <aside id="example-followers-ordered-collection" class="example" title="An OrderedCollection object representing the followers of an organization. It uses pages to show the individual followers.">
+          <pre class="json highlight">
+          {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "id": "https://ordered.example/collection/993263",
+            "type": "OrderedCollection",
+            "attributedTo": "https://ordered.example/organization/514688",
+            "summary": "Fans of Wildflower & Wing Conservation Society",
+            "to": "as:Public",
+            "totalItems": 730584,
+            "first": "https://ordered.example/page/518255",
+            "last": "https://ordered.example/page/750367",
+            "current": "https://ordered.example/page/518255",
+            "published": "2018-05-22T09:00:00Z",
+            "updated": "2026-09-16T14:25:00Z"
+          }
+          </pre>
+        </aside>
+
+        <aside id="example-followers-ordered-collection-page" class="example" title="An OrderedCollectionPage object representing a page of the collection from the previous example.">
+          <pre class="json highlight">
+          {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "id": "https://ordered.example/page/966515",
+            "type": "OrderedCollectionPage",
+            "attributedTo": "https://ordered.example/organization/514688",
+            "summary": "Page of Fans of Wildflower & Wing Conservation Society",
+            "to": "as:Public",
+            "partOf": "https://ordered.example/collection/993263",
+            "next": "https://ordered.example/page/857318",
+            "prev": "https://ordered.example/page/488438",
+            "orderedItems": [
+              "https://friends.example/actor/z-cpgP9y4k3CtblYLa2JW",
+              "https://community.example/user/admin8",
+              "https://photos.example/user/432116",
+              "https://chat.example/ca61aaa6-a229-4260-9d83-dcb01257d5c0",
+              "https://neighbours.example/person/2021/12/18/562434",
+              "https://gather.example/person/K7mQ2vR9",
+              "https://ordered.example/group/074893",
+              "https://photos.example/user/513685"
+            ],
+            "published": "2023-06-12T09:30:00Z",
+            "updated": "2023-06-15T14:45:00Z"
+          }
+          </pre>
+        </aside>
+
         <p class="note" title="Default for notification targeting">
           The follow activity generally is a request to see the objects an actor
           creates. This makes the Followers collection an appropriate default
@@ -1060,6 +1356,21 @@
             and should be prepared to accept all three representations.
           </p>
         </div>
+        <aside id="example-public-addressing" class="example" title="A Like activity addressed to the Public special collection">
+            <pre class="json highlight">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/like/26347",
+              "type": "Like",
+              "actor": "https://social.example/organization/12747",
+              "object": "https://remote.example/user/16448/note/26384",
+              "to": [
+                "https://remote.example/user/16448",
+                "as:Public"
+              ]
+            }
+            </pre>
+          </aside>
       </section>
 
       <section id="likes">
@@ -1425,6 +1736,26 @@ Location: https://dustycloud.org/likes/345
               interactions</a>
             for more details.
           </p>
+          <aside id="example-partial-update" class="example" title="A partial update of an Event object, including only the endTime property. The authorization format is fictional, to illustrate the identity of the requester.">
+            <pre class="http highlight">
+            POST /user/26445/outbox HTTP/1.1
+            Host: social.example
+            Content-Type: application/activity+json
+            Content-Length: 244
+            Authorization: X-Example identity="https://social.example/user/26445", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "type": "Update",
+              "to": "https://social.example/user/26445/followers",
+              "object": {
+                "id": "https://social.example/event/4156",
+                "endTime": "2026-10-27T22:30:00Z"
+              }
+            }
+            </pre>
+          </aside>
+          <p>See <a href="#example-update-activity-inbox"></a> for an example of this <code>Update</code> activity posted to one of the creator's followers.</p>
         </section>
       </section>
       <section id="delete-activity-outbox">
@@ -1840,6 +2171,80 @@ Location: https://dustycloud.org/likes/345
             The server MAY filter its delivery targets according to
             implementation-specific rules (for example, spam filtering).
           </p>
+
+          <aside class="example" title="A reply to a followers-only post that should be forwarded. The fictional authorization format shows the sender identity.">
+            <pre class="http highlight">
+            POST /user/foo/inbox HTTP/1.1
+            Content-Type: application/activity+json
+            Content-Length: 809
+            Host: social.example
+            Authorization: X-Example identity="https://remote.example/actor/414", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://remote.example/create/18776",
+              "type": "Create",
+              "actor": "https://remote.example/actor/414",
+              "to": [
+                "https://social.example/user/foo",
+                "https://social.example/user/foo/followers"
+              ],
+              "object": {
+                "id": "https://remote.example/note/14803",
+                "type": "Note",
+                "attributedTo": "https://remote.example/actor/414",
+                "to": [
+                  "https://social.example/user/foo",
+                  "https://social.example/user/foo/followers"
+                ],
+                "inReplyTo": {
+                    "id": "https://social.example/user/foo/article/24942",
+                    "type": "Article",
+                    "attributedTo": "https://social.example/user/foo",
+                    "to": "https://social.example/user/foo/followers"
+                },
+                "content": "I agree!"
+              }
+            }
+            </pre>
+          </aside>
+
+          <aside class="example" title="The same activity forwarded by the original poster to one of their followers">
+            <pre class="http highlight">
+            POST /actor/a8c347d9-426a-42e8-8d92-43ea043cf3c0/inbox HTTP/1.1
+            Content-Type: application/activity+json
+            Content-Length: 809
+            Host: third.example
+            Authorization: X-Example identity="https://social.example/user/foo", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://remote.example/create/18776",
+              "type": "Create",
+              "actor": "https://remote.example/actor/414",
+              "to": [
+                "https://social.example/user/foo",
+                "https://social.example/user/foo/followers"
+              ],
+              "object": {
+                "id": "https://remote.example/note/14803",
+                "type": "Note",
+                "attributedTo": "https://remote.example/actor/414",
+                "to": [
+                  "https://social.example/user/foo",
+                  "https://social.example/user/foo/followers"
+                ],
+                "inReplyTo": {
+                    "id": "https://social.example/user/foo/article/24942",
+                    "type": "Article",
+                    "attributedTo": "https://social.example/user/foo",
+                    "to": "https://social.example/user/foo/followers"
+                },
+                "content": "I agree!"
+              }
+            }
+            </pre>
+          </aside>
         </section>
 
         <section id="shared-inbox-delivery">
@@ -1863,6 +2268,67 @@ Location: https://dustycloud.org/likes/345
             in determining targeting and performing delivery to specific
             inboxes.
           </p>
+         <aside id="example-two-actors-same-sharedinbox-1" class="example" title="An actor with a sharedInbox property">
+            <pre class="json highlight">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/person/7365",
+              "type": "Person",
+              "name": "Actor 1",
+              "inbox": "https://social.example/collection/26452",
+              "outbox": "https://social.example/collection/22448",
+              "endpoints": {
+                "proxyUrl": "https://social.example/proxy",
+                "sharedInbox": "https://hosted.example/inbox"
+              }
+            }
+            </pre>
+          </aside>
+          <aside id="example-two-actors-same-sharedinbox-2" class="example" title="A second actor with the same sharedInbox property">
+            <pre class="json highlight">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://remote.example/user/foo",
+              "type": "Person",
+              "name": "Actor 2",
+              "inbox": "https://remote.example/user/foo/inbox",
+              "outbox": "https://remote.example/user/foo/outbox",
+              "endpoints": {
+                "sharedInbox": "https://hosted.example/inbox"
+              }
+            }
+            </pre>
+          </aside>
+          <aside id="example-two-actors-same-sharedinbox-post" class="example" title="An activity delivered to both actors at the sharedInbox endpoint. A fictional authentication method is provided for identity.">
+            <pre class="http highlight">
+            POST /inbox HTTP/1.1
+            Content-Type: application/activity+json
+            Content-Length: 646
+            Host: hosted.example
+            Authorization: X-Example identity="https://third.example/actor/01M5WAGY8B9WF91KRYV70KW56Q", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://third.example/create/01M5WAJ1F3CTGE1WX375MMQJ0W",
+              "type": "Create",
+              "actor": "https://third.example/actor/01M5WAGY8B9WF91KRYV70KW56Q",
+              "to": [
+                "https://social.example/person/7365",
+                "https://remote.example/user/foo"
+              ],
+              "object": {
+                "id": "https://third.example/note/01M5WAJ1F3R3PVDW4P6SHGAZ8M",
+                "type": "Note",
+                "attributedTo": "https://third.example/actor/01M5WAGY8B9WF91KRYV70KW56Q",
+                "to": [
+                  "https://social.example/person/7365",
+                  "https://remote.example/user/foo"
+                ],
+                "content": "Hello friends!"
+              }
+            }
+            </pre>
+          </aside>
           <p>
             Additionally, if an object is addressed to the
             <a href="#public-addressing">Public</a> special collection, a
@@ -1878,6 +2344,36 @@ Location: https://dustycloud.org/likes/345
             and would not otherwise receive the activity through the
             <code>sharedInbox</code> mechanism.
           </p>
+          <aside id="example-public-sharedinbox" class="example" title="A public activity delivered to a sharedInbox. A fictional authentication method is provided for identity.">
+            <pre class="http highlight">
+            POST /inbox HTTP/1.1
+            Content-Type: application/activity+json
+            Content-Length: 663
+            Host: hosted.example
+            Authorization: X-Example identity="https://worldnews.example/", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://worldnews.example/create/ceasefire-announced-24019",
+              "type": "Create",
+              "actor": "https://worldnews.example/",
+              "to": "as:Public",
+              "object": {
+                "id": "https://worldnews.example/article/ceasefire-announced-24019",
+                "type": "Article",
+                "attributedTo": "https://worldnews.example/",
+                "to": "as:Public",
+                "name": "Ceasefire Announced in Conflict Region",
+                "summary": "Combatants have agreed to a temporary ceasefire.",
+                "url": {
+                  "type": "Link",
+                  "mediaType": "text/html",
+                  "href": "https://worldnews.example/page/24019"
+                }
+              }
+            }
+            </pre>
+          </aside>
         </section>
       </section>
 
@@ -1912,6 +2408,42 @@ Location: https://dustycloud.org/likes/345
           At minimum, this may be done by ensuring that the <code>Update</code>
           and its <code>object</code> are of same origin.
         </p>
+        <p>In this example, the partial update from <a href="#example-partial-update"></a> is posted to the <code>inbox</code> endpoint of one of the author's followers.</p>
+
+        <aside id="example-update-activity-inbox" class="example" title="An update activity posted to the inbox of one of the creator's followers.">
+            <pre class="http highlight">
+            POST /actor/01M5YV9JF97420Z0YEVQAV9A9B/inbox HTTP/1.1
+            Host: remote.example
+            Content-Type: application/activity+json
+            Content-Length: 900
+            Authorization: X-Example identity="https://social.example/user/26445", credentials="omitted"
+
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/update/32557",
+              "type": "Update",
+              "actor": "https://social.example/user/26445",
+              "to": "https://social.example/user/26445/followers",
+              "summaryMap": {
+                "en": "Eric changed the end time of ActivityPub Meetup to 3:30 PM PDT"
+              },
+              "object": {
+                "id": "https://social.example/event/4156",
+                "type": "Event",
+                "name": "ActivityPub Meetup",
+                "attributedTo": "https://social.example/user/26445",
+                "to": "https://social.example/user/26445/followers",
+                "summary": "Portland ActivityPub community get-together",
+                "startTime": "2026-10-27T20:30:00Z",
+                "endTime": "2026-10-27T22:30:00Z",
+                "location": "https://places.example/pdx/cafe/29410",
+                "published": "2026-10-12T18:35:08Z",
+                "updated": "2026-10-19T12:44:34Z"
+              },
+              "published": "2026-10-19T12:44:34Z"
+            }
+            </pre>
+          </aside>
       </section>
 
       <section id="delete-activity-inbox">
