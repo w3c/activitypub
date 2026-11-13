@@ -1,6 +1,6 @@
 name: PR Triage and Lifecycle Automation
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, ready_for_review, labeled]
   schedule:
     - cron: '*/5 * * * *' # Runs every ~5 minutes
