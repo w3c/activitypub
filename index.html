@@ -149,7 +149,7 @@
 
       <p>
         ActivityPub uses [[!activitystreams-core]] for its vocabulary.
-        This is pretty great because Activity Streams includes all the common
+        This is pretty great because Activity Streams includes many of the common
         terms you need to represent all the activities and content flowing
         around a social network.
         It's likely that Activity Streams already includes all the vocabulary
@@ -352,7 +352,7 @@
         <div datatype="rdf:HTML" property="schema:description">
           <p>
             <a href="#Overview">ActivityPub</a> is one of several related
-            specifications being produced by the Social Web Working Group.
+            specifications produced by the Social Web Working Group.
             Implementers interested in alternative approaches and complementary
             protocols should review [[Micropub]] and the overview document
             [[Social-Web-Protocols]].
@@ -926,7 +926,7 @@
 
         <p>
           The inbox is discovered through the <code>inbox</code>
-          property of an <a href="#actors">actor's</a> profile.
+          property of an <a href="#actors">actor</a>.
           The <code>inbox</code> MUST be an
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
             <code>OrderedCollection</code></a>.
@@ -980,9 +980,9 @@
         </p>
 
         <p class="note" title="Default for notification targeting">
-          The follow activity generally is a request to see the objects an actor
-          creates. This makes the Followers collection an appropriate default
-          target for <a href="#delivery">delivery</a> of notifications.
+          The Follow activity generally is a request to see the objects an actor
+          creates. This makes the followers collection an appropriate default
+          target for <a href="#delivery">delivery</a> of activities.
         </p>
       </section>
 
@@ -1142,14 +1142,14 @@
         Client to server interaction takes place through clients posting
         Activities to an actor's <a href="#outbox">outbox</a>.
         To do this, clients MUST discover the URL of the actor's outbox from
-	their <a href="#actor-objects">profile</a> and then MUST make an HTTP
+	their <a href="#actor-objects">actor object</a> and then MUST make an HTTP
         <code>POST</code> request to this URL with the Content-Type of
         <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>.
         Servers MAY interpret a Content-Type or Accept header of
         <code>application/activity+json</code> as equivalent
         to <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
         for client-to-server interactions.
-        The request MUST be authenticated with the credentials of the user to
+        The request MUST be authenticated with the credentials of the actor to
         whom the outbox belongs.
         The body of the <code>POST</code> request MUST contain a single
         Activity (which MAY contain embedded objects), or a single non-Activity
@@ -1203,7 +1203,7 @@ Location: https://dustycloud.org/likes/345
         <a href="#outbox">outbox</a> collection.
         Depending on the type of Activity, servers may then be required to
         carry out further side effects.
-        (However, there is no guarantee that time the Activity may appear in
+        (However, there is no guarantee at that time that the Activity may appear in
         the outbox.
         The Activity might appear after a delay or disappear at any period).
         These are described per individual Activity below.
@@ -1228,7 +1228,7 @@ Location: https://dustycloud.org/likes/345
           appropriately.
           To some extent, this is dependent upon the particular client
           implementation, but clients must be aware that the server will only
-          forward new Activities to addressees in the <code>to</code>,
+          deliver new Activities to addressees in the <code>to</code>,
           <code>bto</code>, <code>cc</code>, <code>bcc</code>, and
           <code>audience</code> fields.
         </p>
@@ -1436,9 +1436,9 @@ Location: https://dustycloud.org/likes/345
           <code>object</code> with a <code>Tombstone</code> of the object
           that will be displayed in activities which reference the deleted
           object.
-          If the deleted object is requested the server SHOULD respond with
+          If the deleted object is requested, the server SHOULD respond with
           either the HTTP 410 Gone status code if a <code>Tombstone</code>
-          object is presented as the response body, otherwise respond with a
+          object is presented as the response body; otherwise, respond with a
           HTTP 404 Not Found.
         </p>
 
