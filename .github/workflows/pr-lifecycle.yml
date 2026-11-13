@@ -3,7 +3,7 @@ on:
   pull_request_target:
     types: [opened, ready_for_review, labeled]
   schedule:
-    - cron: '*/5 * * * *' # Runs every ~5 minutes
+    - cron: '18,48 * * * *' # Runs 2x an hour, picked minutes where there's not going to be as much contention on github's best-effort cron
   workflow_dispatch:
 
 jobs:
