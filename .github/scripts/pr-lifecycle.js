@@ -69,6 +69,7 @@ module.exports = async ({ github, context, core }) => {
         // 7-day Comment Period timer + WD-comment-open label
         const commentEnd = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
         metadata.commentPeriodEnd = commentEnd.toISOString();
+        metadata.warnedCommentPeriod = false;
 
         await github.rest.issues.addLabels({
           owner: repo.owner,
@@ -91,6 +92,7 @@ module.exports = async ({ github, context, core }) => {
         // 14-day Comment Period timer + WD-comment-open label
         const commentEnd = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
         metadata.commentPeriodEnd = commentEnd.toISOString();
+        metadata.warnedCommentPeriod = false;
 
         await github.rest.issues.addLabels({
           owner: repo.owner,
@@ -112,6 +114,7 @@ module.exports = async ({ github, context, core }) => {
       } else if (labelName === 'WD-objections-open') {
         // Stop comment period timer, add WD-comment-paused label
         metadata.commentPeriodEnd = null;
+        metadata.warnedCommentPeriod = false;
 
         await github.rest.issues.addLabels({
           owner: repo.owner,
@@ -138,6 +141,7 @@ module.exports = async ({ github, context, core }) => {
         // 7-day Post Resolution timer, update labels
         const postResEnd = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
         metadata.postResolutionTimerEnd = postResEnd.toISOString();
+        metadata.warnedPostResolution = false;
 
         try {
           await github.rest.issues.removeLabel({
@@ -178,72 +182,107 @@ module.exports = async ({ github, context, core }) => {
     }
 
     // --- CRON / TIMER CHECKS ---
-    if (metadata.commentPeriodEnd && new Date(metadata.commentPeriodEnd) <= now) {
-      // Comment Period timer is done, remove WD-comment-open label
-      await github.rest.issues.createComment({
-        owner: repo.owner,
-        repo: repo.repo,
-        issue_number: prNumber,
-        body: 'The comment period is now over. WG Chair is expected to evaluate whether this should be merged or closed based on the [Social Web Working Group publishing rules](https://github.com/w3c/socialwg/blob/main/governance/publication-workflow.md).',
-      });
 
-      try {
-        await github.rest.issues.removeLabel({
+    // Comment Period 24-hour Warning & Expiration Check
+    if (metadata.commentPeriodEnd) {
+      const commentEnd = new Date(metadata.commentPeriodEnd);
+      const oneDayBefore = new Date(commentEnd.getTime() - 24 * 60 * 60 * 1000);
+
+      if (!metadata.warnedCommentPeriod && now >= oneDayBefore && now < commentEnd) {
+        await github.rest.issues.createComment({
           owner: repo.owner,
           repo: repo.repo,
           issue_number: prNumber,
-          name: 'WD-comment-open',
+          body: `Reminder: The comment period will end in 24 hours (scheduled for ${commentEnd.toUTCString()}).`,
         });
-      } catch (e) { /* ignore */ }
+        metadata.warnedCommentPeriod = true;
+        updated = true;
+      }
 
-      try {
-        await github.rest.issues.addLabels({
+      if (commentEnd <= now) {
+        await github.rest.issues.createComment({
           owner: repo.owner,
           repo: repo.repo,
           issue_number: prNumber,
-          labels: ['WD-comment-closed'],
+          body: 'The comment period is now over. WG Chair is expected to evaluate whether this should be merged or closed based on the [Social Web Working Group publishing rules](https://github.com/w3c/socialwg/blob/main/governance/publication-workflow.md).',
         });
-      } catch (e) { /* ignore */ }
 
-      metadata.commentPeriodEnd = null;
-      updated = true;
+        try {
+          await github.rest.issues.removeLabel({
+            owner: repo.owner,
+            repo: repo.repo,
+            issue_number: prNumber,
+            name: 'WD-comment-open',
+          });
+        } catch (e) { /* ignore */ }
+
+        try {
+          await github.rest.issues.addLabels({
+            owner: repo.owner,
+            repo: repo.repo,
+            issue_number: prNumber,
+            labels: ['WD-comment-closed'],
+          });
+        } catch (e) { /* ignore */ }
+
+        metadata.commentPeriodEnd = null;
+        metadata.warnedCommentPeriod = false;
+        updated = true;
+      }
     }
 
-    // Post Resolution Timer Expiration
-    if (metadata.postResolutionTimerEnd && new Date(metadata.postResolutionTimerEnd) <= now) {
-      await github.rest.issues.createComment({
-        owner: repo.owner,
-        repo: repo.repo,
-        issue_number: prNumber,
-        body: 'The post-resolution comment period is now over. WG Chair is expected to evaluate whether this should be merged or closed based on the [Social Web Working Group publishing rules](https://github.com/w3c/socialwg/blob/main/governance/publication-workflow.md).',
-      });
+    // Post Resolution Timer 24-hour Warning & Expiration Check
+    if (metadata.postResolutionTimerEnd) {
+      const postResEnd = new Date(metadata.postResolutionTimerEnd);
+      const oneDayBefore = new Date(postResEnd.getTime() - 24 * 60 * 60 * 1000);
 
-      try {
-        await github.rest.issues.removeLabel({
+      if (!metadata.warnedPostResolution && now >= oneDayBefore && now < postResEnd) {
+        await github.rest.issues.createComment({
           owner: repo.owner,
           repo: repo.repo,
           issue_number: prNumber,
-          name: 'WD-comment-open',
+          body: `Reminder: The post-resolution comment period will end in 24 hours (scheduled for ${postResEnd.toUTCString()}).`,
         });
-      } catch (e) { /* ignore */ }
+        metadata.warnedPostResolution = true;
+        updated = true;
+      }
 
-      try {
-        await github.rest.issues.addLabels({
+      if (postResEnd <= now) {
+        await github.rest.issues.createComment({
           owner: repo.owner,
           repo: repo.repo,
           issue_number: prNumber,
-          labels: ['WD-comment-closed'],
+          body: 'The post-resolution comment period is now over. WG Chair is expected to evaluate whether this should be merged or closed based on the [Social Web Working Group publishing rules](https://github.com/w3c/socialwg/blob/main/governance/publication-workflow.md).',
         });
-      } catch (e) { /* ignore */ }
 
-      metadata.postResolutionTimerEnd = null;
-      updated = true;
+        try {
+          await github.rest.issues.removeLabel({
+            owner: repo.owner,
+            repo: repo.repo,
+            issue_number: prNumber,
+            name: 'WD-comment-open',
+          });
+        } catch (e) { /* ignore */ }
+
+        try {
+          await github.rest.issues.addLabels({
+            owner: repo.owner,
+            repo: repo.repo,
+            issue_number: prNumber,
+            labels: ['WD-comment-closed'],
+          });
+        } catch (e) { /* ignore */ }
+
+        metadata.postResolutionTimerEnd = null;
+        metadata.warnedPostResolution = false;
+        updated = true;
+      }
     }
 
     if (metadata.staleTimerEnd) {
       let staleEnd = new Date(metadata.staleTimerEnd);
       
-      // Extension Adjustment Logic (Minute-based)
+      // Extension Adjustment Logic
       if (metadata.postResolutionTimerEnd) {
         const postResEnd = new Date(metadata.postResolutionTimerEnd);
         if (postResEnd > staleEnd) {
@@ -336,7 +375,14 @@ async function getBotComment(github, repo, prNumber) {
 
   return {
     commentId: null,
-    metadata: { staleTimerEnd: null, commentPeriodEnd: null, postResolutionTimerEnd: null, warnedStale: false },
+    metadata: {
+      staleTimerEnd: null,
+      commentPeriodEnd: null,
+      postResolutionTimerEnd: null,
+      warnedStale: false,
+      warnedCommentPeriod: false,
+      warnedPostResolution: false
+    },
   };
 }
 
