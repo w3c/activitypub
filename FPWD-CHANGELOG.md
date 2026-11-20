@@ -27,6 +27,15 @@ This is a log of changes since TR.
 - A missing period "." was restored in the description of the following collection.
 - The name "ActivityStreams" was changed to match the term used in the "Activity Streams" documents.
 - Christine Lemmer Webber's name was corrected from her former name throughout the document, in credits, acknowledgements, and in examples.
+- Line breaks were removed from the inbox JSON example in the "Overview" section
+- In "Objects", a reference to the "ActivityPub JSON-LD context" is replaced with the "Activity Streams JSON-LD context"
+- Replace generic references to servers "forwarding" activities with "delivering" them
+- In Client to Server Interactions section, correct "guarantee that time that" to "guarantee at that time that"
+- In Client to Server Interactions section, refer to credentials of an "actor" instead of credentials of a "user"
+- In the Inbox and Client to Server Interactions sections, mentions of actor profiles or an actor's profile replaced with "actor objects" or "actor"
+- Under Followers Collection, delivery of "notifications" now says delivery of "activities"
+- In the Overview section, no longer say that Activity Streams includes "all" of the terms you'll need, but instead say that it includes "many" of the terms you'll need.
+- In the Overview, refer to ActivityPub as a specification that is "produced" rather than "being produced" by the WG
 
 ## Class 3
 
