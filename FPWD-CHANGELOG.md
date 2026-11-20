@@ -40,6 +40,7 @@ This is a log of changes since TR.
 - In the section on public inbox delivery, "a server MAY deliver that object to all known sharedInbox endpoints on the network" changed to "a server MAY deliver that object to additional sharedInbox endpoints on the network".
 - In the section "Outbox Delivery Requirements for Server to Server", the phrase "to additional inboxes" is expanded to "to additional inboxes, such as `sharedInbox` endpoints".
 - In discussing delivery of activities addressed only to the Public special collection, delivery to other inboxes is allowed. "If the object is addressed exclusively to the "public" collection, the object, may be publicly viewable in the actor's outbox without being delivered to any actors."
+- References to RFC 7234 on HTTP caching were updated to its replacement, RFC 9111.
 
 ## Class 4
 
