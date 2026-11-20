@@ -730,11 +730,64 @@
           <dt id="streams-property">streams</dt>
           <dd>
             A list of supplementary Collections which may be of interest.
+            <aside id="example-actor-with-streams" class="example" title="An actor with a streams property">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/organization/27635",
+              "type": "Organization",
+              "name": "Whitewater Rafting Club",
+              "inbox": "https://social.example/collection/15751",
+              "outbox": "https://social.example/collection/31378",
+              "streams": [
+                {
+                  "id": "https://social.example/collection/14014",
+                  "type": "Collection",
+                  "name": "Ocoee River trip 2026 photos"
+                },
+                {
+                  "id": "https://social.example/collection/6108",
+                  "type": "Collection",
+                  "name": "Bylaws and other legal documents"
+                }
+              ]
+            }
+            </pre>
+            </aside>
           </dd>
           <dt id="preferredUsername">preferredUsername</dt>
           <dd>
             A short username which may be used to refer to the actor, with no
             uniqueness guarantees.
+            <aside id="example-ascii-preferred-username" class="example" title="An actor with a preferredUsername using only ASCII characters">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/person/25223",
+              "type": "Person",
+              "name": "Siti Rahmawati",
+              "inbox": "https://social.example/collection/18539",
+              "outbox": "https://social.example/collection/28489",
+              "preferredUsername": "sitir98"
+            }
+            </pre>
+            </aside>
+            <aside id="example-non-ascii-preferred-username" class="example" title="An actor with a non-ASCII preferredUsername">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/person/7982",
+              "type": "Person",
+              "nameMap": {
+                "en": "Wáng Xiǎomíng",
+                "zh": "王小明"
+              },
+              "inbox": "https://social.example/collection/5189",
+              "outbox": "https://social.example/collection/31264",
+              "preferredUsername": "追风少年"
+            }
+            </pre>
+            </aside>
           </dd>
           <dt id="endpoints">endpoints</dt>
           <dd>
@@ -743,6 +796,49 @@
             referencing this actor.
             This mapping may be nested inside the actor document as the value
             or may be a link to a JSON-LD document with these properties.
+            <aside id="example-actor-with-embedded-endpoints" class="example" title="An actor with an anonymous embedded endpoints node and extension endpoint">
+            <pre class="highlight json">
+            {
+              "@context": [
+                "https://www.w3.org/ns/activitystreams",
+                "https://extensions.example/calendar"
+              ],
+              "id": "https://social.example/application/17180",
+              "type": "Application",
+              "name": "Calendar Reminder Bot",
+              "inbox": "https://social.example/collection/26623",
+              "outbox": "https://social.example/collection/16231",
+              "endpoints": {
+                "calendarSearch": "https://social.example/api/search/calendar"
+              }
+            }
+            </pre>
+            </aside>
+            <aside id="example-actor-with-linked-endpoints" class="example" title="An actor with a linked endpoints node">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/service/8914",
+              "type": "Service",
+              "name": "Community Weather Alerts",
+              "inbox": "https://social.example/collection/8551",
+              "outbox": "https://social.example/collection/782",
+              "endpoints": "https://social.example/endpoints"
+            }
+            </pre>
+            </aside>
+            <aside id="example-endpoints" class="example" title="An example endpoints object">
+            <pre class="highlight json">
+            {
+              "@context": "https://www.w3.org/ns/activitystreams",
+              "id": "https://social.example/endpoints",
+              "type": "Object",
+              "name": "social.example server-wide endpoints",
+              "sharedInbox": "https://social.example/inbox",
+              "proxyUrl": "https://social.example/proxy"
+            }
+            </pre>
+            </aside>
           </dd>
         </dl>
 
